@@ -959,18 +959,10 @@ class CutAlg(pyframe.core.Algorithm):
     def cut_OneElectronOneMuon(self):
         if(len(self.store['electrons_loose'])==1 and len(self.store['muons'])==1):return True
         return False
-<<<<<<< HEAD
     #__________________________________________________________________________                                                                                                 
     def cut_ThreeLeptons(self): 
         if len(self.store['electrons_loose']+self.store['muons'])==3: return True
         return False
-=======
-    #__________________________________________________________________________                                                                                                                            
-    def cut_ThreeLeptons(self): 
-        if len(self.store['electrons_loose']+self.store['muons'])==3: return True
-        return False
-
->>>>>>> origin/master
     #__________________________________________________________________________
     def cut_TwoElectronsTwoMuons(self):
         return (len(self.store['electrons_loose'])==2 and len(self.store['muons'])==2)
@@ -1716,19 +1708,7 @@ class CutAlg(pyframe.core.Algorithm):
         if (leptons[0].tlv + leptons[1].tlv).M() < 200*GeV: return True
         return False
   #__________________________________________________________________________
-    def cut_SSMassBelow200(self):
-       electrons = self.store['electrons_loose']
-       muons = self.store['muons']
-       leptons = electrons+muons
 
-<<<<<<< HEAD
-       if len(leptons)>=2:
-           for p in combinations(leptons,2):
-               if (p[0].trkcharge * p[1].trkcharge > 0.0 and (p[0].tlv+p[1].tlv).M() < 200*GeV): return True
-       return False
-   #__________________________________________________________________________
-=======
-  #__________________________________________________________________________
     def cut_SSMassBelow200(self):
         electrons = self.store['electrons_loose']
         muons = self.store['muons']
@@ -1739,7 +1719,6 @@ class CutAlg(pyframe.core.Algorithm):
         return False
 
     #__________________________________________________________________________
->>>>>>> origin/master
 
     def cut_AllEleEta247AndNotCrackRegion(self):
       electrons = self.store['electrons_loose']
