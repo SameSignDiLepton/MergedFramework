@@ -63,12 +63,16 @@ class ListBuilder(pyframe.core.Algorithm):
     #__________________________________________________________________________
     def execute(self, weight):
         for prefix, key in zip(self.prefixes, self.keys):
-            #parts = pyframe.core.buildParticleProxies(self.chain, getattr(self.chain, prefix+'n'), prefix)
-            nparts = "" 
-            if "jet" in prefix: nparts = "njets"      # added!!!
-            else: nparts = "n"+prefix.replace("_","") # added!!!
-            parts = pyframe.core.buildParticleProxies(self.chain, getattr(self.chain, nparts), prefix) # changed!!!
+            nparts = ""
+            if "jet" in prefix:
+              if hasattr(self.chain,"njets"): nparts = "njets"
+              if hasattr(self.chain,"njet"):  nparts = "njet"
+            else: nparts = "n"+prefix.replace("_","")
+            parts = pyframe.core.buildParticleProxies(self.chain, getattr(self.chain, nparts), prefix) 
             self.store[key] = parts
+
+
+
 
 #------------------------------------------------------------------------------
 class HistCopyAlg(pyframe.core.Algorithm):
@@ -379,7 +383,7 @@ class AttachTLVs(pyframe.core.Algorithm):
                 if p.prefix.startswith('muon_'):
                     p.tlv.SetPtEtaPhiM(p.pt, p.eta, p.phi, p.m)
                 elif p.prefix.startswith('el_'):
-                    p.tlv.SetPtEtaPhiM(p.pt, p.eta, p.phi, 0.0)
+                    p.tlv.SetPtEtaPhiM(p.pt, p.eta, p.phi, p.m)
                 elif p.prefix.startswith('ph_'):
                     p.tlv.SetPtEtaPhiM(p.pt, p.etas2, p.phi, 0.0)
                 elif p.prefix.startswith('jet_'):

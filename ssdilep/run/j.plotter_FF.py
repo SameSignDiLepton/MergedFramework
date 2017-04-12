@@ -76,11 +76,11 @@ def analyze(config):
     ## build and pt-sort objects
     ## ---------------------------------------
     loop += pyframe.algs.ListBuilder(
-        prefixes = ['muon_','el_','jet_'],
-        keys = ['muons','electrons','jets'],
+        prefixes = ['muon_','jet_'],
+        keys = ['muons','jets'],
         )
     loop += pyframe.algs.AttachTLVs(
-        keys = ['muons','electrons','jets'],
+        keys = ['muons','jets'],
         )
     # just a decoration of particles ...
     loop += ssdilep.algs.vars.ParticlesBuilder(
@@ -102,20 +102,21 @@ def analyze(config):
     ## ---------------------------------------
     loop += pyframe.algs.CutFlowAlg(key='presel')
     
-    ## weights
+    ## filter weights
     ## +++++++++++++++++++++++++++++++++++++++
     loop += ssdilep.algs.EvWeights.MCEventWeight(cutflow='presel',key='weight_mc_event')
     loop += ssdilep.algs.EvWeights.Pileup(cutflow='presel',key='weight_pileup')
+    loop += ssdilep.algs.EvWeights.TrigPresc(cutflow='presel',use_avg=True,key="weight_data_unpresc")
    
     ## cuts
     ## +++++++++++++++++++++++++++++++++++++++
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='OneMuon') 
-    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='LeadMuIsLoose') 
+    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='LeadMuIsMedium') 
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='AllMuZ0SinTheta05') 
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='AllMuPt25') 
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='AllMuEta247') 
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='OneJet') 
-    #loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='JetCleaning') 
+    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='JetCleaning') 
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='AllMuIsoBound15') 
 
     
@@ -128,15 +129,11 @@ def analyze(config):
     ## ---------------------------------------
     ## event
     ## +++++++++++++++++++++++++++++++++++++++
-    loop += ssdilep.algs.EvWeights.TrigPresc(
-            use_avg   = True,
-            key       = "DataUnPrescAvg",
-            )
     
     # WARNING: no trigger correction available for HLT_mu20_L1MU15 
     loop += ssdilep.algs.EvWeights.MuTrigSF(
             trig_list = ["HLT_mu24", "HLT_mu50"],
-            mu_reco   = "Loose",
+            mu_reco   = "Medium",
             mu_iso    = "FixedCutTightTrackOnly",
             key       = "MuTrigSFNUM1",
             scale     = None,
@@ -144,58 +141,23 @@ def analyze(config):
     
     loop += ssdilep.algs.EvWeights.MuTrigSF(
             trig_list = ["HLT_mu24", "HLT_mu50"],
-            mu_reco   = "Loose",
+            mu_reco   = "Medium",
             mu_iso    = "NotFixedCutTightTrackOnly",
             key       = "MuTrigSFDEN1",
             scale     = None,
             )
     
-    loop += ssdilep.algs.EvWeights.MuTrigSF(
-            trig_list = ["HLT_mu24", "HLT_mu50"],
-            mu_reco   = "Loose",
-            mu_iso    = "Gradient",
-            key       = "MuTrigSFNUM2",
-            scale     = None,
-            )
-    
-    loop += ssdilep.algs.EvWeights.MuTrigSF(
-            trig_list = ["HLT_mu24", "HLT_mu50"],
-            mu_reco   = "Loose",
-            mu_iso    = "Gradient",
-            key       = "MuTrigSFDEN2",
-            scale     = None,
-            )
-    
     ## objects
     ## +++++++++++++++++++++++++++++++++++++++
+    """
     loop += ssdilep.algs.ObjWeights.MuAllSF(
             mu_index      = 0,
             mu_iso        = "NotFixedCutTightTrackOnly",
-            mu_reco       = "Loose",
-            key           = "MuSFNotFixedCutTightTrackOnlyLoose",
+            mu_reco       = "Medium",
+            key           = "MuSFNotFixedCutTightTrackOnlyMedium",
             scale         = None,
             )
-    loop += ssdilep.algs.ObjWeights.MuAllSF(
-            mu_index      = 0,
-            mu_iso        = "NotGradient",
-            mu_reco       = "Loose",
-            key           = "MuSFNotGradientLoose",
-            scale         = None,
-            )
-    loop += ssdilep.algs.ObjWeights.MuAllSF(
-            mu_index      = 0,
-            mu_iso        = "FixedCutTightTrackOnly",
-            mu_reco       = "Loose",
-            key           = "MuSFFixedCutTightTrackOnlyLoose",
-            scale         = None,
-            )
-    loop += ssdilep.algs.ObjWeights.MuAllSF(
-            mu_index      = 0,
-            mu_iso        = "Gradient",
-            mu_reco       = "Loose",
-            key           = "MuSFGradientLoose",
-            scale         = None,
-            )
+    """
     loop += ssdilep.algs.ObjWeights.MuAllSF(
             mu_index      = 0,
             mu_iso        = "FixedCutTightTrackOnly",
@@ -203,22 +165,13 @@ def analyze(config):
             key           = "MuSFFixedCutTightTrackOnlyMedium",
             scale         = None,
             )
-    loop += ssdilep.algs.ObjWeights.MuAllSF(
-            mu_index      = 0,
-            mu_iso        = "Gradient",
-            mu_reco       = "Medium",
-            key           = "MuSFGradientMedium",
-            scale         = None,
-            )
-    """    
+    """ 
     loop += ssdilep.algs.ObjWeights.JetPtWeightHist(
             config_file=os.path.join(main_path,'ssdilep/data/weights_30Jan.root'),
             key='JetW',
             scale=None,
             )
     """ 
-    
-    
     ## configure histograms
     ## ---------------------------------------
     hist_list = []
@@ -230,7 +183,6 @@ def analyze(config):
     ##-------------------------------------------------------------------------
     ## make plots
     ##-------------------------------------------------------------------------
-    """ 
     ## before any selection
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
@@ -239,9 +191,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ],
             )
     
@@ -251,12 +203,12 @@ def analyze(config):
             hist_list    = hist_list,
             do_var_check = True,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ],
             )
-    """
     ## F1
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
@@ -265,9 +217,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig3',None],
@@ -280,9 +232,10 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ['MuJetDphi27',None],
               #['AllJetPt35',['JetW']],
               ['AllJetPt35',None],
@@ -290,7 +243,7 @@ def analyze(config):
               ['METlow40',None],
               ],
             )
-    """ 
+    
     ## F2
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
@@ -299,9 +252,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig3',None],
@@ -314,9 +267,10 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig10',None],
@@ -332,9 +286,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig3',None],
@@ -347,9 +301,10 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig10',None],
@@ -365,9 +320,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ['MuJetDphi28',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig3',None],
@@ -380,9 +335,10 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ['MuJetDphi28',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig10',None],
@@ -398,9 +354,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ['MuJetDphi26',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig3',None],
@@ -413,9 +369,10 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ['MuJetDphi26',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig10',None],
@@ -431,9 +388,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig2',None],
@@ -446,9 +403,10 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig10',None],
@@ -464,9 +422,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig4',None],
@@ -479,9 +437,10 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ['MuJetDphi27',None],
               ['AllJetPt35',None],
               ['LeadMuD0Sig10',None],
@@ -498,9 +457,9 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM1']],
+              ['PassAndMatch',['MuTrigSFNUM1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyLoose']],
+              ['LeadMuIsoFixedCutTightTrackOnly',['MuSFFixedCutTightTrackOnlyMedium']],
               ['MuJetDphi27',None],
               ['AllJetPt40',None],
               ['LeadMuD0Sig3',None],
@@ -513,9 +472,10 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN1']],
+              ['PassAndMatch',['MuTrigSFDEN1']],
               ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyLoose']],
+              #['LeadMuIsoNotFixedCutTightTrackOnly',['MuSFNotFixedCutTightTrackOnlyMedium']],
+              ['LeadMuIsoNotFixedCutTightTrackOnly',None],
               ['MuJetDphi27',None],
               ['AllJetPt40',None],
               ['LeadMuD0Sig10',None],
@@ -523,269 +483,17 @@ def analyze(config):
               ],
             )
     
-    """    
-    
-    """ 
-    ## before any selection
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G0',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G0',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ],
-            )
-    
-    ## G1
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G1',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig3',None],
-              ['METlow40',None],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G1',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig10',None],
-              ['METlow40',None],
-              ],
-            )
-    
-    ## G2
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G2',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig3',None],
-              ['METlow50',None],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G2',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig10',None],
-              ['METlow50',None],
-              ],
-            )
-    
-    ## G3
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G3',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig3',None],
-              ['METlow30',None],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G3',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig10',None],
-              ['METlow30',None],
-              ],
-            )
-    
-    ## G4
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G4',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ['MuJetDphi28',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig3',None],
-              ['METlow40',None],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G4',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ['MuJetDphi28',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig10',None],
-              ['METlow40',None],
-              ],
-            )
-    
-    ## G5
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G5',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ['MuJetDphi26',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig3',None],
-              ['METlow40',None],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G5',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ['MuJetDphi26',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig10',None],
-              ['METlow40',None],
-              ],
-            )
-    
-    ## G6
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G6',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig2',None],
-              ['METlow40',None],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G6',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig10',None],
-              ['METlow40',None],
-              ],
-            )
-    
-    ## G7
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G7',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig4',None],
-              ['METlow40',None],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G7',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt35',None],
-              ['LeadMuD0Sig10',None],
-              ['METlow40',None],
-              ],
-            )
-    
-    
-    ## G8
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_NUM_G8',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFNUM2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoGradient',['MuSFGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt40',None],
-              ['LeadMuD0Sig3',None],
-              ['METlow40',None],
-              ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region    = 'FAKES_DEN_G8',
-            plot_all  = False,
-            cut_flow  = [
-              ['SingleMuPassAndMatchPresc',['DataUnPrescAvg','MuTrigSFDEN2']],
-              ['LeadMuTruthFilter',None],
-              ['LeadMuIsoNotGradient',['MuSFNotGradientLoose']],
-              ['MuJetDphi27',None],
-              ['AllJetPt40',None],
-              ['LeadMuD0Sig10',None],
-              ['METlow40',None],
-              ],
-            )
-    """ 
     loop += pyframe.algs.HistCopyAlg()
 
     ##-------------------------------------------------------------------------
     ## run the job
     ##-------------------------------------------------------------------------
-    loop.run(chain, 0, config['events'],
+    min_entry = int(config.get('min_entry') if ('min_entry' in config.keys()) else  0)
+    max_entry = int(config.get('max_entry') if ('max_entry' in config.keys()) else -1)
+    print min_entry," ",max_entry
+    loop.run(chain, 
+            min_entry = min_entry,
+            max_entry = max_entry,
             branches_on_file = config.get('branches_on_file'),
             do_var_log = config.get('do_var_log'),
             )
