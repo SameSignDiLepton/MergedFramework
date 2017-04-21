@@ -19,6 +19,8 @@ cutflow_weighted_presel   = Var(name = 'cutflow_weighted_presel',log=False)
 cutflow_ZCR               = Var(name = 'cutflow_ZCR',log=False)
 cutflow_weighted_ZCR      = Var(name = 'cutflow_weighted_ZCR',log=False)
 
+cutflow_weighted_SR2C_TTTT          = Var(name = 'cutflow_weighted_SR2C_TTTT',log=False)
+cutflow_weighted_SR2D_TTTT          = Var(name = 'cutflow_weighted_SR2D_TTTT',log=False)
 
 
 ## Event variables
@@ -52,6 +54,13 @@ nmuons = Var(name = 'nmuons',
               )
 
 nelectrons = Var(name = 'nelectrons',
+              path  = 'event',
+              xmin  = 0,
+              xmax  = 6,
+              log   = False,
+              )
+
+nleptons = Var(name = 'nleptons',
               path  = 'event',
               xmin  = 0,
               xmax  = 6,
@@ -93,18 +102,29 @@ muons_mVis = Var(name     = 'muons_mVis',
               #xmin    = 0.,
               xmin    = 0.,
               #xmax    = 800.,
-              xmax    = 500.,
+              xmax    = 1500.,
               rebin   = 20,
               #rebin   = 1,
               log     = False,
               )
 
-muons_mTtot = Var(name     = 'muons_mTtot',
+muons_mVisTot = Var(name     = 'muons_mVisTot',
               path    = 'event',
               #xmin    = 0.,
               xmin    = 0.,
               #xmax    = 800.,
-              xmax    = 500.,
+              xmax    = 1500.,
+              rebin   = 40,
+              #rebin   = 1,
+              log     = False,
+              )
+
+muons_mTTot = Var(name     = 'muons_mTTot',
+              path    = 'event',
+              #xmin    = 0.,
+              xmin    = 0.,
+              #xmax    = 800.,
+              xmax    = 2000.,
               rebin   = 40,
               #rebin   = 1,
               log     = False,
@@ -126,6 +146,14 @@ muons_deta = Var(name = 'muons_deta',
               log     = False,
               )
 
+muons_dR = Var(name = 'muons_dR',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 5.0,
+              rebin  = 4,
+              log     = False,
+              )
+
 muons_chargeprod = Var(name = 'muons_chargeprod',
               path    = 'event',
               xmin    = -2,
@@ -134,6 +162,214 @@ muons_chargeprod = Var(name = 'muons_chargeprod',
               log     = False,
               )
 
+muons_chargesum = Var(name = 'muons_chargesum',
+              path    = 'event',
+              xmin    = -3,
+              xmax    = 3,
+              #rebin  = 10,
+              log     = False,
+              )
+
+muons_pTH = Var(name  = 'muons_pTH',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 500.,
+              rebin   = 25,
+              log     = False,
+              )
+
+###2D plots
+'''
+muons_dR_muons_pTH = Var(name  = 'muons_dR_muons_pTH',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 5.,
+              ymin    = 0.,
+              ymax    = 500.,
+              #rebinx  = 4,
+              #rebiny  = 25,
+              log     = False,
+              )
+
+muons_dR_met_clus_sumet = Var(name  = 'muons_dR_met_clus_sumet',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 5.,
+              ymin    = 0.,
+              ymax   = 2000.,
+              #rebinx  = 4,
+              #rebiny  = 50,
+              log     = False,
+              )
+
+met_clus_sumet_muons_pTH = Var(name  = 'met_clus_sumet_muons_pTH',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 2000.,
+              ymin    = 0.,
+              ymax    = 500.,
+              #rebinx  = 50,
+              #rebiny  = 25,
+              log     = False,
+              )
+'''
+
+
+
+### Two SS Pair variables
+muons_mVis1 = Var(name  = 'muons_mVis1',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 1200.,
+              rebin   = 40,
+              log     = False,
+              )
+
+muons_dphi1 = Var(name = 'muons_dphi1',
+              path    = 'event',
+              xmin    = -3.2,
+              xmax    = 3.2,
+              rebin   = 4,
+              log     = False,
+              )
+
+muons_deta1 = Var(name = 'muons_deta1',
+              path    = 'event',
+              xmin    = -2.5,
+              xmax    = 2.5,
+              rebin  = 4,
+              log     = False,
+              )
+
+muons_dR1 = Var(name = 'muons_dR1',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 5.0,
+              rebin  = 4,
+              log     = False,
+              )
+
+muons_chargeprod1 = Var(name = 'muons_chargeprod1',
+              path    = 'event',
+              xmin    = -2,
+              xmax    = 2,
+              #rebin  = 10,
+              log     = False,
+              )
+
+muons_chargesum1 = Var(name = 'muons_chargesum1',
+              path    = 'event',
+              xmin    = -3,
+              xmax    = 3,
+              #rebin  = 10,
+              log     = False,
+              )
+
+muons_pTH1 = Var(name  = 'muons_pTH1',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 500.,
+              rebin   = 25,
+              log     = False,
+              )
+
+
+muons_mVis2 = Var(name  = 'muons_mVis2',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 1200.,
+              rebin   = 40,
+              log     = False,
+              )
+
+muons_dphi2 = Var(name = 'muons_dphi2',
+              path    = 'event',
+              xmin    = -3.2,
+              xmax    = 3.2,
+              rebin   = 4,
+              log     = False,
+              )
+
+muons_deta2 = Var(name = 'muons_deta2',
+              path    = 'event',
+              xmin    = -2.5,
+              xmax    = 2.5,
+              rebin  = 4,
+              log     = False,
+              )
+
+muons_dR2 = Var(name = 'muons_dR2',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 5.0,
+              rebin  = 4,
+              log     = False,
+              )
+
+muons_chargeprod2 = Var(name = 'muons_chargeprod2',
+              path    = 'event',
+              xmin    = -2,
+              xmax    = 2,
+              #rebin  = 10,
+              log     = False,
+              )
+
+muons_chargesum2 = Var(name = 'muons_chargesum2',
+              path    = 'event',
+              xmin    = -3,
+              xmax    = 3,
+              #rebin  = 10,
+              log     = False,
+              )
+
+muons_pTH2 = Var(name  = 'muons_pTH2',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 500.,
+              rebin   = 25,
+              log     = False,
+              )
+
+
+pairs_dmVis = Var(name  = 'pairs_dmVis',
+              path    = 'event',
+              xmin    = -500.,
+              xmax    = 500.,
+              rebin   = 40,
+              log     = False,
+              )
+
+pairs_dmVisRatio = Var(name  = 'pairs_dmVisRatio',
+              path    = 'event',
+              xmin    = -1.,
+              xmax    = 1.,
+              rebin   = 10,
+              log     = False,
+              )
+
+pairs_dphi = Var(name = 'pairs_dphi',
+              path    = 'event',
+              xmin    = -3.2,
+              xmax    = 3.2,
+              rebin   = 4,
+              log     = False,
+              )
+
+pairs_deta = Var(name = 'pairs_deta',
+              path    = 'event',
+              xmin    = -2.5,
+              xmax    = 2.5,
+              rebin  = 4,
+              log     = False,
+              )
+
+pairs_dR = Var(name = 'pairs_dR',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 5.0,
+              rebin  = 4,
+              log     = False,
+              )
 
 ## Single muon variables
 ## ---------------------------------------
@@ -142,8 +378,8 @@ mulead_pt = Var(name = 'mulead_pt',
               xmin   = 0.,
               xmax   = 400.,
               #xmax   = 120.,
-              #rebin  = 20,
-              rebin  = 5,
+              rebin  = 20,
+              #rebin  = 5,
               log    = False,
               )
 
@@ -398,7 +634,7 @@ met_trk_phi = Var(name = 'met_trk_phi',
 met_clus_sumet = Var(name = 'met_clus_sumet',
               path    = 'met',
               xmin    = 0.,
-              xmax    = 1000.,
+              xmax    = 2000.,
               rebin   = 50,
               log     = False,
               )
@@ -406,8 +642,8 @@ met_clus_sumet = Var(name = 'met_clus_sumet',
 met_trk_sumet = Var(name = 'met_trk_sumet',
               path    = 'met',
               xmin    = 0.,
-              xmax    = 1000.,
-              rebin   = 50,
+              xmax    = 2000.,
+              rebin   = 100,
               log     = False,
               )
 
@@ -425,6 +661,7 @@ vars_list.append(actualIntPerXing)
 vars_list.append(NPV)
 vars_list.append(nmuons)
 vars_list.append(nelectrons)
+vars_list.append(nleptons)
 vars_list.append(njets)
 vars_list.append(nmuonpairs)
 
@@ -476,12 +713,45 @@ vars_list.append(musublead_trkd0sig)
 vars_list.append(musublead_trkz0)
 vars_list.append(musublead_trkz0sintheta)
 
-vars_list.append(muons_mTtot)
+vars_list.append(muons_mTTot)
 vars_list.append(muons_mVis)
+vars_list.append(muons_mVisTot)
 vars_list.append(muons_dphi)
 vars_list.append(muons_deta)
+vars_list.append(muons_dR)
 vars_list.append(muons_chargeprod)
+vars_list.append(muons_chargesum)
+vars_list.append(muons_pTH)
 #"""
+"""
+vars_list.append(muons_dR_muons_pTH)
+vars_list.append(muons_dR_met_clus_sumet)
+vars_list.append(met_clus_sumet_muons_pTH)
+"""
+#####Two ss pairs variables
+"""
+vars_list.append(muons_dphi1)
+vars_list.append(muons_deta1)
+vars_list.append(muons_dR1)
+vars_list.append(muons_mVis1)
+vars_list.append(muons_chargeprod1)
+vars_list.append(muons_chargesum1)
+vars_list.append(muons_pTH1)
+
+vars_list.append(muons_dphi2)
+vars_list.append(muons_deta2)
+vars_list.append(muons_dR2)
+vars_list.append(muons_mVis2)
+vars_list.append(muons_chargeprod2)
+vars_list.append(muons_chargesum2)
+vars_list.append(muons_pTH2)
+
+vars_list.append(pairs_dphi)
+vars_list.append(pairs_deta)
+vars_list.append(pairs_dR)
+vars_list.append(pairs_dmVis)
+vars_list.append(pairs_dmVisRatio)
+"""
 
 
 # ---------------------
@@ -493,6 +763,9 @@ vars_list.append(cutflow_weighted_presel)
 vars_list.append(cutflow_ZCR)
 vars_list.append(cutflow_weighted_ZCR)
 """
+vars_list.append(cutflow_weighted_SR2C_TTTT)
+vars_list.append(cutflow_weighted_SR2D_TTTT)
+
 
 vars_dict = {}
 for var in vars_list: vars_dict[var.name] = var.__dict__

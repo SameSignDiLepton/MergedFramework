@@ -353,7 +353,7 @@ def plot_hist(
     if xmax==None: xmax = h_total.GetBinLowEdge(h_total.GetNbinsX()+1)
     ymin = 1.e-3
     ymax = h_total.GetMaximum()
-    for b in backgrounds:
+    for b in backgrounds + signal:
       if not b in hists.keys(): continue
       ymax = max([ymax,hists[b].GetMaximum()])
     if data: ymax = max([ymax,h_data.GetMaximum()])

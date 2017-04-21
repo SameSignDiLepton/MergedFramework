@@ -140,7 +140,9 @@ def analyze(config):
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='OddSSMuons')
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='BadJetVeto')
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='DCHFilter') 
-
+    
+    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='EleVeto')
+    
     ## weights configuration
     ## ---------------------------------------
     ## event
@@ -354,6 +356,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['TwoMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuTT',['Mu0AllSF','Mu1AllSF']],
                            ['SSMassAbove200GeV',None],
@@ -366,6 +369,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['TwoMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuTL',['Mu0AllSF','Mu1RecoSF','Mu1FF']],
                            ['SSMassAbove200GeV',None],
@@ -377,6 +381,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['TwoMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuLT',['Mu0RecoSF','Mu1AllSF','Mu0FF']],
                            ['SSMassAbove200GeV',None],
@@ -388,12 +393,13 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['TwoMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuLL',['Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
                            ['SSMassAbove200GeV',None],
                            ],
             )
-
+    """
     ## Inclusive MuMuE SR
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
@@ -485,8 +491,8 @@ def analyze(config):
                            ['SSMassAbove200GeV',None],
                            ],
             )
-
-    ## Inclusive EEMu SR
+    """
+    ## Inclusive MuMuMu SR
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
             region       = 'SR1MuMuMu_TTT',
@@ -494,6 +500,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuTTT',['Mu0AllSF','Mu1AllSF','Mu2AllSF']],
                            ['SSMassAbove200GeV',None],
@@ -506,6 +513,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuTTL',['Mu0AllSF','Mu1AllSF','Mu2RecoSF','Mu2FF']],
                            ['SSMassAbove200GeV',None],
@@ -517,6 +525,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuTLT',['Mu0AllSF','Mu1RecoSF','Mu2AllSF','Mu1FF']],
                            ['SSMassAbove200GeV',None],
@@ -528,6 +537,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuLTT',['Mu0RecoSF','Mu1AllSF','Mu2AllSF','Mu0FF']],
                            ['SSMassAbove200GeV',None],
@@ -539,6 +549,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuTLL',['Mu0AllSF','Mu1RecoSF','Mu2RecoSF','Mu1FF','Mu2FF']],
                            ['SSMassAbove200GeV',None],
@@ -550,6 +561,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuLTL',['Mu0RecoSF','Mu1AllSF','Mu2RecoSF','Mu0FF','Mu2FF']],
                            ['SSMassAbove200GeV',None],
@@ -561,6 +573,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuLLT',['Mu0RecoSF','Mu1RecoSF','Mu2AllSF','Mu0FF','Mu1FF']],
                            ['SSMassAbove200GeV',None],
@@ -572,6 +585,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuLLL',['Mu0RecoSF','Mu1RecoSF','Mu2RecoSF','Mu0FF','Mu1FF','Mu2FF']],
                            ['SSMassAbove200GeV',None],
@@ -586,6 +600,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['TwoMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuTT',['Mu0AllSF','Mu1AllSF']],
                            ['SSMassAbove200GeV',None],
@@ -601,6 +616,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['TwoMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuTL',['Mu0AllSF','Mu1RecoSF','Mu1FF']],
                            ['SSMassAbove200GeV',None],
@@ -615,6 +631,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['TwoMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuLT',['Mu0RecoSF','Mu1AllSF','Mu0FF']],
                            ['SSMassAbove200GeV',None],
@@ -629,6 +646,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['TwoMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuLL',['Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
                            ['SSMassAbove200GeV',None],
@@ -637,7 +655,7 @@ def analyze(config):
                            ['mTTotAbove250',None],
                            ],
             )
-
+    """
     ## Targeted MuMuE SR
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
@@ -753,8 +771,8 @@ def analyze(config):
                            ['mTTotAbove250',None],
                            ],
             )
-
-    ## Targeted: EEMu SR
+    """
+    ## Targeted: MuMUMu SR
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
             region       = 'SR1BMuMuMu_TTT',
@@ -762,6 +780,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuTTT',['Mu0AllSF','Mu1AllSF','Mu2AllSF']],
                            ['SSMassAbove200GeV',None],
@@ -777,6 +796,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuTTL',['Mu0AllSF','Mu1AllSF','Mu2RecoSF','Mu2FF']],
                            ['SSMassAbove200GeV',None],
@@ -791,6 +811,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuTLT',['Mu0AllSF','Mu1RecoSF','Mu2AllSF','Mu1FF']],
                            ['SSMassAbove200GeV',None],
@@ -805,6 +826,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuLTT',['Mu0RecoSF','Mu1AllSF','Mu2AllSF','Mu0FF']],
                            ['SSMassAbove200GeV',None],
@@ -819,6 +841,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuTLL',['Mu0AllSF','Mu1RecoSF','Mu2RecoSF','Mu1FF','Mu2FF']],
                            ['SSMassAbove200GeV',None],
@@ -833,6 +856,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuLTL',['Mu0RecoSF','Mu1AllSF','Mu2RecoSF','Mu0FF','Mu2FF']],
                            ['SSMassAbove200GeV',None],
@@ -847,6 +871,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuLLT',['Mu0RecoSF','Mu1RecoSF','Mu2AllSF','Mu0FF','Mu1FF']],
                            ['SSMassAbove200GeV',None],
@@ -861,6 +886,7 @@ def analyze(config):
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
+                           ['ThreeMuons',None],
                            ['SingleMuPassAndMatch',['MuTrigSF']],
                            ['MuMuMuLLL',['Mu0RecoSF','Mu1RecoSF','Mu2RecoSF','Mu0FF','Mu1FF','Mu2FF']],
                            ['SSMassAbove200GeV',None],

@@ -61,9 +61,9 @@ DCH500 = Sample(name = "Pythia8EvtGen_A14NNPDF23LO_DCH500",
 
 DCH600 = Sample(name = "Pythia8EvtGen_A14NNPDF23LO_DCH600", 
                 tlatex = 'm_{H^{\pm\pm}}=600 GeV',         
-                line_color   = ROOT.kOrange-3,
-                marker_color = ROOT.kOrange-3,
-                fill_color   = ROOT.kOrange-3,
+                line_color   = ROOT.kGreen+2,
+                marker_color = ROOT.kGreen+2,
+                fill_color   = ROOT.kGreen+2,
                 line_width   = 3,
                 line_style   = 1,
                 fill_style   = 3004,
@@ -97,9 +97,9 @@ DCH800 = Sample(name = "Pythia8EvtGen_A14NNPDF23LO_DCH800",
 
 DCH900 = Sample(name = "Pythia8EvtGen_A14NNPDF23LO_DCH900", 
                 tlatex = 'm_{H^{\pm\pm}}=900 GeV',         
-                line_color   = ROOT.kOrange-3,
-                marker_color = ROOT.kOrange-3,
-                fill_color   = ROOT.kOrange-3,
+                line_color   = ROOT.kMagenta-3,
+                marker_color = ROOT.kMagenta-3,
+                fill_color   = ROOT.kMagenta-3,
                 line_width   = 3,
                 line_style   = 1,
                 fill_style   = 3004,
@@ -164,7 +164,7 @@ root_DCH.append(DCH700)
 root_DCH.append(DCH800)
 root_DCH.append(DCH900)
 root_DCH.append(DCH1000)
-root_DCH.append(DCH1100)
+#root_DCH.append(DCH1100)
 root_DCH.append(DCH1200)
 root_DCH.append(DCH1300)
 
@@ -178,14 +178,14 @@ parent["HR"] = {"feff":1.0, "tlatex": "H^{\pm\pm}_{R}(%s)"}
 parent["HL"] = {"feff":1.0, "tlatex": "H^{\pm\pm}_{L}(%s)"}
 
 pos_decay = {}
-pos_decay["MpMp"] = {"feff": 1. / 0.25, "tlatex": "#mu^{+}#mu^{+}"}
-pos_decay["EpMp"] = {"feff": 1. / 0.50, "tlatex": "e^{+}#mu^{+}"}
-pos_decay["EpEp"] = {"feff": 1. / 0.25, "tlatex": "#mu^{+}#mu^{+}"}
+pos_decay["MpMp"] = {"feff": 1. / 0.25, "tlatex": "\\mu^{+}\\mu^{+}"}
+pos_decay["EpMp"] = {"feff": 1. / 0.50, "tlatex": "e^{+}\\mu^{+}"}
+pos_decay["EpEp"] = {"feff": 1. / 0.25, "tlatex": "e^{+}e^{+}"}
 
 neg_decay = {}
-neg_decay["MmMm"] = {"feff": 1. / 0.25, "tlatex": "#mu^{-}#mu^{-}"}
-neg_decay["EmMm"] = {"feff": 1. / 0.50, "tlatex": "e^{-}#mu^{-}"}
-neg_decay["EmEm"] = {"feff": 1. / 0.25, "tlatex": "#mu^{-}#mu^{-}"}
+neg_decay["MmMm"] = {"feff": 1. / 0.25, "tlatex": "\\mu^{-}\\mu^{-}"}
+neg_decay["EmMm"] = {"feff": 1. / 0.50, "tlatex": "e^{-}\\mu^{-}"}
+neg_decay["EmEm"] = {"feff": 1. / 0.25, "tlatex": "e^{-}e^{-}"}
 
 # loops over the list of original samples
 # and appends the decay modes taking into
@@ -201,9 +201,24 @@ for boson in parent.keys():
         globals()[full_sname]         = copy(sroot)
         globals()[full_sname].infile  = sroot.name
         globals()[full_sname].name    = full_sname
-        globals()[full_sname].tlatex  = parent[boson]["tlatex"]%(sroot.name.replace("DCH",""))+"#rightarrow " + pos_decay[pos_mode]["tlatex"] + neg_decay[neg_mode]["tlatex"]
+        globals()[full_sname].tlatex  = parent[boson]["tlatex"]%(sroot.name.replace("Pythia8EvtGen_A14NNPDF23LO_DCH",""))+"\\rightarrow " + pos_decay[pos_mode]["tlatex"] + neg_decay[neg_mode]["tlatex"]
         globals()[full_sname].feff    = parent[boson]["feff"] * pos_decay[pos_mode]["feff"] * neg_decay[neg_mode]["feff"]
         full_DCH.append(globals()[full_sname])
+        
+
+
+
+
+#Scale some samples to make them visible
+Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLMmMm.xsec *= 10
+Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLMmMm.tlatex += "* 10"
+
+Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm.xsec *= 100
+Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm.tlatex += "* 100"
+
+Pythia8EvtGen_A14NNPDF23LO_DCH900_HLMpMp_HLMmMm.xsec *= 100
+Pythia8EvtGen_A14NNPDF23LO_DCH900_HLMpMp_HLMmMm.tlatex += "* 100"
+
 
 
 # EOF

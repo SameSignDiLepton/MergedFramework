@@ -60,6 +60,13 @@ nelectrons = Var(name = 'nelectrons',
               log   = False,
               )
 
+nleptons = Var(name = 'nleptons',
+              path  = 'event',
+              xmin  = 0,
+              xmax  = 6,
+              log   = False,
+              )
+
 njets = Var(name = 'njets',
               path  = 'event',
               xmin  = 0,
@@ -95,18 +102,29 @@ muons_mVis = Var(name     = 'muons_mVis',
               #xmin    = 0.,
               xmin    = 0.,
               #xmax    = 800.,
-              xmax    = 500.,
+              xmax    = 1500.,
               rebin   = 20,
               #rebin   = 1,
               log     = False,
               )
 
-muons_mTtot = Var(name     = 'muons_mTtot',
+muons_mVisTot = Var(name     = 'muons_mVisTot',
               path    = 'event',
               #xmin    = 0.,
               xmin    = 0.,
               #xmax    = 800.,
-              xmax    = 500.,
+              xmax    = 1500.,
+              rebin   = 40,
+              #rebin   = 1,
+              log     = False,
+              )
+
+muons_mTTot = Var(name     = 'muons_mTTot',
+              path    = 'event',
+              #xmin    = 0.,
+              xmin    = 0.,
+              #xmax    = 800.,
+              xmax    = 2000.,
               rebin   = 40,
               #rebin   = 1,
               log     = False,
@@ -128,11 +146,35 @@ muons_deta = Var(name = 'muons_deta',
               log     = False,
               )
 
+muons_dR = Var(name = 'muons_dR',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 5.0,
+              rebin  = 4,
+              log     = False,
+              )
+
 muons_chargeprod = Var(name = 'muons_chargeprod',
               path    = 'event',
               xmin    = -2,
               xmax    = 2,
               #rebin  = 10,
+              log     = False,
+              )
+
+muons_chargesum = Var(name = 'muons_chargesum',
+              path    = 'event',
+              xmin    = -3,
+              xmax    = 3,
+              #rebin  = 10,
+              log     = False,
+              )
+
+muons_pTH = Var(name  = 'muons_pTH',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 500.,
+              rebin   = 10,
               log     = False,
               )
 
@@ -954,6 +996,7 @@ vars_list.append(actualIntPerXing)
 vars_list.append(NPV)
 vars_list.append(nmuons)
 vars_list.append(nelectrons)
+vars_list.append(nleptons)
 vars_list.append(njets)
 vars_list.append(nmuonpairs)
 
@@ -965,11 +1008,15 @@ vars_list.append(met_clus_sumet)
 # for muon studies
 # -----------------
 
-vars_list.append(muons_mTtot)
+vars_list.append(muons_mTTot)
 vars_list.append(muons_mVis)
+vars_list.append(muons_mVisTot)
 vars_list.append(muons_dphi)
 vars_list.append(muons_deta)
+vars_list.append(muons_dR)
 vars_list.append(muons_chargeprod)
+vars_list.append(muons_chargesum)
+vars_list.append(muons_pTH)
 
 vars_list.append(mulead_pt)
 vars_list.append(mulead_eta)

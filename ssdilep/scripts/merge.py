@@ -5,7 +5,7 @@ import histmgr
 import funcs
 import os
 
-from ssdilep.samples import samples
+from ssdilep.samples import samples, samples_DCH
 from ssdilep.plots   import vars_mumu
 from ssdilep.plots   import vars
 from systematics     import *
@@ -81,6 +81,17 @@ signals = []
 #signals.append(samples.all_DCH)
 #signals.append(samples.DCH800)
 
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH300_HLMpMp_HLMmMm)
+#signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm)
+#signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH1300_HLMpMp_HLMmMm)
+
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLMmMm)
+#signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLEmEm)
+#signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH600_HLEpEp_HLMmMm)
+
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH900_HLMpMp_HLMmMm)
+
+recom_signals  = [ s.copy() for s in signals ]
 
 #--------------
 # Estimators
@@ -147,12 +158,12 @@ fakes.estimator = histmgr.AddRegEstimator(
       subtraction_regions = ["_".join([reg_prefix]+[suffix]).rstrip("_") for suffix in fake_subtraction_regions]
       )
 
-for s in recom_mc_bkg + [recom_data]:
+for s in recom_mc_bkg + recom_signals + [recom_data]:
   s.estimator = histmgr.AddRegEstimator(
       hm               = hm, 
       sample           = s,
       data_sample      = data,
-      mc_samples       = mc_bkg, 
+      mc_samples       = mc_bkg + signals, 
       addition_regions = ["_".join([reg_prefix]+[suffix]).rstrip("_") for suffix in main_addition_regions]
       )
 
@@ -186,7 +197,7 @@ plot_ord_bkg += recom_mc_bkg
 if options.makeplot == "True":
  funcs.plot_hist(
     backgrounds   = plot_ord_bkg,
-    signal        = signals, 
+    signal        = recom_signals, 
     data          = recom_data,
     region        = options.region,
     label         = options.label,
@@ -207,13 +218,14 @@ if options.makeplot == "True":
 else:
  funcs.write_hist(
          backgrounds = plot_ord_bkg,
-         signal      = signals, # This can be a list
-         #data        = recom_data,
+         signal      = recom_signals, # This can be a list
+         data        = recom_data,
          region      = options.region,
          icut        = int(options.icut),
          histname    = os.path.join(mumu_vdict[options.vname]['path'],mumu_vdict[options.vname]['hname']),
          rebin       = mumu_vdict[options.vname]['rebin'],
          rebinVar    = mumu_vdict[options.vname]['rebinVar'],
+         rebinToEq   = True,
          sys_dict    = None,
          outname     = plotsfile
          )
