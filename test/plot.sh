@@ -63,12 +63,14 @@
 #python ../ssdilep/scripts/merge.py --var="NPV" --reg="FAKESVR1_LTT" --lab="VR" --tag="test" --icut="3" --input="/coepp/cephfs/mel/fscutti/ssdilep/HistNoteVR1" --output="./" --makeplot=True --fakest="Subtraction"
 
 
-python ../ssdilep/scripts/merge.py --var="muons_pTH" --reg="SR1BMuMu_MAINREG" --lab="2Mu_DCH" --tag="2Mu_DCH" --icut="6" --input="/coepp/cephfs/mel/pttaylor/ssdilep/HistSR1MuMu_New" --output="./" --makeplot=False --fakest="TwoLepRegions"
-#python ../ssdilep/scripts/merge.py --var="muons_pTH" --reg="SR1BMuMuMu_MAINREG" --lab="3Mu_DCH" --tag="3Mu_DCH" --icut="6" --input="/coepp/cephfs/mel/pttaylor/ssdilep/HistSR1MuMu_New" --output="./" --makeplot=True --fakest="ThreeLepRegions"
-#python ../ssdilep/scripts/merge.py --var="muons_pTH" --reg="SR1MuMu_MAINREG" --lab="2Mu_Inclusive" --tag="2Mu_Inclusive" --icut="3" --input="/coepp/cephfs/mel/pttaylor/ssdilep/HistSR1MuMu_New" --output="./" --makeplot=True --fakest="TwoLepRegions"
-#python ../ssdilep/scripts/merge.py --var="muons_pTH" --reg="SR1MuMuMu_MAINREG" --lab="3Mu_Inclusive" --tag="3Mu_Inclusive" --icut="3" --input="/coepp/cephfs/mel/pttaylor/ssdilep/HistSR1MuMu_New" --output="./" --makeplot=True --fakest="ThreeLepRegions"
+python ../ssdilep/scripts/merge.py --var="muons_mVis" --reg="SR1BMuMu_MAINREG" --lab="SR2Mu_DCH" --tag="SR2Mu_DCH" --icut="6" --input="/coepp/cephfs/mel/pttaylor/ssdilep/HistSR1MuMu_New" --output="./" --makeplot=False --fakest="TwoLepRegions"
+python ../ssdilep/scripts/merge.py --var="muons_mVis" --reg="SR1BMuMuMu_MAINREG" --lab="SR3Mu_DCH" --tag="SR3Mu_DCH" --icut="6" --input="/coepp/cephfs/mel/pttaylor/ssdilep/HistSR1MuMu_New" --output="./" --makeplot=False --fakest="ThreeLepRegions"
+python ../ssdilep/scripts/merge.py --var="muons_mVis" --reg="SR1MuMu_MAINREG" --lab="SR2Mu_Inclusive" --tag="SR2Mu_Inclusive" --icut="3" --input="/coepp/cephfs/mel/pttaylor/ssdilep/HistSR1MuMu_New" --output="./" --makeplot=False --fakest="TwoLepRegions"
+python ../ssdilep/scripts/merge.py --var="muons_mVis" --reg="SR1MuMuMu_MAINREG" --lab="SR3Mu_Inclusive" --tag="SR3Mu_Inclusive" --icut="3" --input="/coepp/cephfs/mel/pttaylor/ssdilep/HistSR1MuMu_New" --output="./" --makeplot=False --fakest="ThreeLepRegions"
 
 
+#python ../ssdilep/scripts/merge.py --var="muons_mVis" --reg="FAKESVR1_MAINREG" --lab="FakesVR1_3Mu" --tag="FakesVR1_3Mu" --icut="3" --input="/coepp/cephfs/mel/fscutti/common/HistNoteVR1" --output="./" --makeplot=False --fakest="ThreeLepRegions"
+#python ../ssdilep/scripts/merge.py --var="muons_mVis" --reg="FAKESVR1_TESTING" --lab="FakesVR1_2Mu" --tag="FakesVR1_2Mu" --icut="3" --input="/coepp/cephfs/mel/fscutti/common/HistNoteVR1" --output="./" --makeplot=False --fakest="TwoLepRegions"
 
 
 # ----

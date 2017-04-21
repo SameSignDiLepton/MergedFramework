@@ -82,14 +82,21 @@ signals = []
 #signals.append(samples.DCH800)
 
 signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH300_HLMpMp_HLMmMm)
-#signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm)
-#signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH1300_HLMpMp_HLMmMm)
+
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH400_HLMpMp_HLMmMm)
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH500_HLMpMp_HLMmMm)
 
 signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLMmMm)
 #signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLEmEm)
 #signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH600_HLEpEp_HLMmMm)
 
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH700_HLMpMp_HLMmMm)
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm)
 signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH900_HLMpMp_HLMmMm)
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH1000_HLMpMp_HLMmMm)
+#signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH1100_HLMpMp_HLMmMm)
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH1200_HLMpMp_HLMmMm)
+signals.append(samples_DCH.Pythia8EvtGen_A14NNPDF23LO_DCH1300_HLMpMp_HLMmMm)
 
 recom_signals  = [ s.copy() for s in signals ]
 
@@ -105,7 +112,7 @@ fake_subtraction_regions = []
 
 reg_prefix, reg_suffix = funcs.get_pref_and_suff(options.region)
 
-if reg_suffix == "MAINREG":
+if reg_suffix == "MAINREG" or "TESTING":
   
   # including all regions for fake-factor method
   # ---------------------------------------------
@@ -225,9 +232,11 @@ else:
          histname    = os.path.join(mumu_vdict[options.vname]['path'],mumu_vdict[options.vname]['hname']),
          rebin       = mumu_vdict[options.vname]['rebin'],
          rebinVar    = mumu_vdict[options.vname]['rebinVar'],
-         rebinToEq   = True,
-         sys_dict    = None,
-         outname     = plotsfile
+         sys_dict    = None, #sys_dict if DO_SYS else None,
+         outname     = plotsfile,
+         regName     = options.tag,
+         rebinToEq   = True, #if options.rebinToEq=="True" else False,
+         varName     = str(options.vname),
          )
  ## EOF
 

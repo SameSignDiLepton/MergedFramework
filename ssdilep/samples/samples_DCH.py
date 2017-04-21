@@ -210,14 +210,14 @@ for boson in parent.keys():
 
 
 #Scale some samples to make them visible
-Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLMmMm.xsec *= 10
-Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLMmMm.tlatex += "* 10"
+#Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLMmMm.xsec *= 10
+#Pythia8EvtGen_A14NNPDF23LO_DCH600_HLMpMp_HLMmMm.tlatex += "* 10"
 
-Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm.xsec *= 100
-Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm.tlatex += "* 100"
+#Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm.xsec *= 100
+#Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm.tlatex += "* 100"
 
-Pythia8EvtGen_A14NNPDF23LO_DCH900_HLMpMp_HLMmMm.xsec *= 100
-Pythia8EvtGen_A14NNPDF23LO_DCH900_HLMpMp_HLMmMm.tlatex += "* 100"
+#Pythia8EvtGen_A14NNPDF23LO_DCH900_HLMpMp_HLMmMm.xsec *= 100
+#Pythia8EvtGen_A14NNPDF23LO_DCH900_HLMpMp_HLMmMm.tlatex += "* 100"
 
 
 
