@@ -181,6 +181,26 @@ h_muons_pTH  = Hist1D( hname  = "h_muons_pTH",
                               vexpr  = "self.store['muons_pTH']/GeV",
                               )
 
+h_SumPTLep  = Hist1D( hname  = "h_SumPTLep",
+                              xtitle = "#Sigma p_T(leptons) [GeV]",
+                              ytitle = "Events / (1 GeV)", 
+                              nbins  = 2000,
+                              xmin   = 0.0,
+                              xmax   = 2000.,
+                              dir    = "event",
+                              vexpr  = "self.store['SumPTLep']/GeV",
+                              )
+
+h_SumPTLepMET  = Hist1D( hname  = "h_SumPTLepMET",
+                              xtitle = "#Sigma p_T(leptons,met) [GeV]",
+                              ytitle = "Events / (1 GeV)", 
+                              nbins  = 2000,
+                              xmin   = 0.0,
+                              xmax   = 2000.,
+                              dir    = "event",
+                              vexpr  = "self.store['SumPTLepMET']/GeV",
+                              )
+
 h_muons_dR  = Hist1D( hname  = "h_muons_dR",
                               xtitle = "#DeltaR(SS_{lead})",
                               ytitle = "Events", 

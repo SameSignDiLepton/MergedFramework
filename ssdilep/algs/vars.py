@@ -591,11 +591,17 @@ class DiMuVars(pyframe.core.Algorithm):
           self.store['muons_dphi']     = muon2.tlv.DeltaPhi(muon1.tlv)
           self.store['muons_deta']     = muon2.tlv.Eta()-muon1.tlv.Eta()
           self.store['muons_dR']       = math.sqrt(self.store['muons_dphi']**2 + self.store['muons_deta']**2)
-          self.store['muons_pTH']            = (muon2.tlv+muon1.tlv).Pt()
-          
-          self.store['nleptons']       = self.chain.nmuon + self.chain.nel
+          self.store['muons_pTH']      = (muon2.tlv+muon1.tlv).Pt()
           
           leptons = muons + electrons
+          
+          self.store['SumPTLep']       = 0
+          for l in leptons:
+            self.store['SumPTLep']    += l.tlv.Pt() 
+         
+          self.store['SumPTLepMET']    = self.store['SumPTLep'] + met.tlv.Pt()
+           
+          self.store['nleptons']       = self.chain.nmuon + self.chain.nel
           
           if len(leptons) == 2:
             lep1T = ROOT.TLorentzVector()

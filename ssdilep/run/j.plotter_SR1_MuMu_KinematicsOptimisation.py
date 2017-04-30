@@ -351,7 +351,7 @@ def analyze(config):
     ## Inclusive MuMu SR
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMu_TT',
+            region       = 'SR1Incl_TT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -365,7 +365,7 @@ def analyze(config):
             )
 
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMu_TL',
+            region       = 'SR1Incl_TL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -378,7 +378,7 @@ def analyze(config):
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMu_LT',
+            region       = 'SR1Incl_LT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -391,7 +391,7 @@ def analyze(config):
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMu_LL',
+            region       = 'SR1Incl_LL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -403,103 +403,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ],
             )
-    """
-    ## Inclusive MuMuE SR
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuE_TTT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuTTT',['Ele0AllSF','Mu0AllSF','Mu1AllSF']],
-                           ['SSMassAbove200GeV',None],
-                           ],
-            )
-
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuE_TTL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuTTL',['Ele0AllSF','Mu0AllSF','Mu1RecoSF','Mu1FF']],
-                           ['SSMassAbove200GeV',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuE_TLT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuTLT',['Ele0AllSF','Mu0RecoSF','Mu1AllSF','Mu0FF']],
-                           ['SSMassAbove200GeV',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuE_LTT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuLTT',['Ele0RecoSF','Mu0AllSF','Mu1AllSF','Ele0FF']],
-                           ['SSMassAbove200GeV',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuE_TLL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuTLL',['Ele0AllSF','Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
-                           ['SSMassAbove200GeV',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuE_LTL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuLTL',['Ele0RecoSF','Mu0AllSF','Mu1RecoSF','Ele0FF','Mu1FF']],
-                           ['SSMassAbove200GeV',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuE_LLT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuLLT',['Ele0RecoSF','Mu0RecoSF','Mu1AllSF','Ele0FF','Mu0FF']],
-                           ['SSMassAbove200GeV',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuE_LLL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuLLL',['Ele0RecoSF','Mu0RecoSF','Mu1RecoSF','Ele0FF','Mu0FF','Mu1FF']],
-                           ['SSMassAbove200GeV',None],
-                           ],
-            )
-    """
+    
     ## Inclusive MuMuMu SR
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuMu_TTT',
+            region       = 'SR1Incl_TTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -513,7 +421,7 @@ def analyze(config):
             )
 
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuMu_TTL',
+            region       = 'SR1Incl_TTL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -526,7 +434,7 @@ def analyze(config):
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuMu_TLT',
+            region       = 'SR1Incl_TLT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -539,7 +447,7 @@ def analyze(config):
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuMu_LTT',
+            region       = 'SR1Incl_LTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -552,7 +460,7 @@ def analyze(config):
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuMu_TLL',
+            region       = 'SR1Incl_TLL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -565,7 +473,7 @@ def analyze(config):
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuMu_LTL',
+            region       = 'SR1Incl_LTL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -578,7 +486,7 @@ def analyze(config):
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuMu_LLT',
+            region       = 'SR1Incl_LLT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -591,7 +499,7 @@ def analyze(config):
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1MuMuMu_LLL',
+            region       = 'SR1Incl_LLL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -601,13 +509,578 @@ def analyze(config):
                            ['MuMuMuLLL',['Mu0RecoSF','Mu1RecoSF','Mu2RecoSF','Mu0FF','Mu1FF','Mu2FF']],
                            ['SSMassAbove200GeV',None],
                            ['ZVeto',None],
+                           ],
+            )
+    
+    ## Targeted MuMu SR
+    ## ---------------------------------------
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_TT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuTT',['Mu0AllSF','Mu1AllSF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_TL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuTL',['Mu0AllSF','Mu1RecoSF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_LT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuLT',['Mu0RecoSF','Mu1AllSF','Mu0FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_LL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuLL',['Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    
+    ## Targeted: MuMuMu SR
+    ## ---------------------------------------
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_TTT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTTT',['Mu0AllSF','Mu1AllSF','Mu2AllSF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_TTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTTL',['Mu0AllSF','Mu1AllSF','Mu2RecoSF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_TLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTLT',['Mu0AllSF','Mu1RecoSF','Mu2AllSF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_LTT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLTT',['Mu0RecoSF','Mu1AllSF','Mu2AllSF','Mu0FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_TLL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTLL',['Mu0AllSF','Mu1RecoSF','Mu2RecoSF','Mu1FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_LTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLTL',['Mu0RecoSF','Mu1AllSF','Mu2RecoSF','Mu0FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_LLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLLT',['Mu0RecoSF','Mu1RecoSF','Mu2AllSF','Mu0FF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NoSumPTCut_LLL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLLL',['Mu0RecoSF','Mu1RecoSF','Mu2RecoSF','Mu0FF','Mu1FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['MuonDRBelow35',None],
                            ],
             )
 
     ## Targeted MuMu SR
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMu_TT',
+            region       = 'SR1NodRCut_TT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuTT',['Mu0AllSF','Mu1AllSF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_TL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuTL',['Mu0AllSF','Mu1RecoSF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_LT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuLT',['Mu0RecoSF','Mu1AllSF','Mu0FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_LL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuLL',['Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    
+    ## Targeted: MuMuMu SR
+    ## ---------------------------------------
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_TTT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTTT',['Mu0AllSF','Mu1AllSF','Mu2AllSF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_TTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTTL',['Mu0AllSF','Mu1AllSF','Mu2RecoSF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_TLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTLT',['Mu0AllSF','Mu1RecoSF','Mu2AllSF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_LTT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLTT',['Mu0RecoSF','Mu1AllSF','Mu2AllSF','Mu0FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_TLL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTLL',['Mu0AllSF','Mu1RecoSF','Mu2RecoSF','Mu1FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_LTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLTL',['Mu0RecoSF','Mu1AllSF','Mu2RecoSF','Mu0FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_LLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLLT',['Mu0RecoSF','Mu1RecoSF','Mu2AllSF','Mu0FF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NodRCut_LLL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLLL',['Mu0RecoSF','Mu1RecoSF','Mu2RecoSF','Mu0FF','Mu1FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['pTHAbove100',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+
+    ## Targeted MuMu SR
+    ## ---------------------------------------
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_TT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuTT',['Mu0AllSF','Mu1AllSF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_TL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuTL',['Mu0AllSF','Mu1RecoSF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_LT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuLT',['Mu0RecoSF','Mu1AllSF','Mu0FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_LL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuLL',['Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    
+    ## Targeted: MuMuMu SR
+    ## ---------------------------------------
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_TTT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTTT',['Mu0AllSF','Mu1AllSF','Mu2AllSF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_TTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTTL',['Mu0AllSF','Mu1AllSF','Mu2RecoSF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_TLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTLT',['Mu0AllSF','Mu1RecoSF','Mu2AllSF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_LTT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLTT',['Mu0RecoSF','Mu1AllSF','Mu2AllSF','Mu0FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_TLL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuTLL',['Mu0AllSF','Mu1RecoSF','Mu2RecoSF','Mu1FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_LTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLTL',['Mu0RecoSF','Mu1AllSF','Mu2RecoSF','Mu0FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_LLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLLT',['Mu0RecoSF','Mu1RecoSF','Mu2AllSF','Mu0FF','Mu1FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1NopTHCut_LLL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['ThreeMuons',None],
+                           ['SingleMuPassAndMatch',['MuTrigSF']],
+                           ['MuMuMuLLL',['Mu0RecoSF','Mu1RecoSF','Mu2RecoSF','Mu0FF','Mu1FF','Mu2FF']],
+                           ['SSMassAbove200GeV',None],
+                           ['ZVeto',None],
+                           ['MuonDRBelow35',None],
+                           ['SumPTLepAbove300',None],
+                           ],
+            )
+
+
+    ## Targeted MuMu SR
+    ## ---------------------------------------
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR1All3_TT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -619,12 +1092,12 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
 
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMu_TL',
+            region       = 'SR1All3_TL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -636,11 +1109,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMu_LT',
+            region       = 'SR1All3_LT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -652,11 +1125,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMu_LL',
+            region       = 'SR1All3_LL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -668,130 +1141,14 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
-    """
-    ## Targeted MuMuE SR
+    
+    ## Targeted: MuMuMu SR
     ## ---------------------------------------
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuE_TTT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuTTT',['Ele0AllSF','Mu0AllSF','Mu1AllSF']],
-                           ['SSMassAbove200GeV',None],
-                           ['pTHAbove100',None],
-                           ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
-                           ],
-            )
-
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuE_TTL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuTTL',['Ele0AllSF','Mu0AllSF','Mu1RecoSF','Mu1FF']],
-                           ['SSMassAbove200GeV',None],
-                           ['pTHAbove100',None],
-                           ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuE_TLT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuTLT',['Ele0AllSF','Mu0RecoSF','Mu1AllSF','Mu0FF']],
-                           ['SSMassAbove200GeV',None],
-                           ['pTHAbove100',None],
-                           ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuE_LTT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuLTT',['Ele0RecoSF','Mu0AllSF','Mu1AllSF','Ele0FF']],
-                           ['SSMassAbove200GeV',None],
-                           ['pTHAbove100',None],
-                           ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuE_TLL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuTLL',['Ele0AllSF','Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
-                           ['SSMassAbove200GeV',None],
-                           ['pTHAbove100',None],
-                           ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuE_LTL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuLTL',['Ele0RecoSF','Mu0AllSF','Mu1RecoSF','Ele0FF','Mu1FF']],
-                           ['SSMassAbove200GeV',None],
-                           ['pTHAbove100',None],
-                           ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuE_LLT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuLLT',['Ele0RecoSF','Mu0RecoSF','Mu1AllSF','Ele0FF','Mu0FF']],
-                           ['SSMassAbove200GeV',None],
-                           ['pTHAbove100',None],
-                           ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuE_LLL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['SingleMuPassAndMatch',['MuTrigSF']],
-                           ['EMuMuLLL',['Ele0RecoSF','Mu0RecoSF','Mu1RecoSF','Ele0FF','Mu0FF','Mu1FF']],
-                           ['SSMassAbove200GeV',None],
-                           ['pTHAbove100',None],
-                           ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
-                           ],
-            )
-    """
-    ## Targeted: MuMUMu SR
-    ## ---------------------------------------
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuMu_TTT',
+            region       = 'SR1All3_TTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -803,12 +1160,12 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
 
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuMu_TTL',
+            region       = 'SR1All3_TTL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -820,11 +1177,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuMu_TLT',
+            region       = 'SR1All3_TLT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -836,11 +1193,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuMu_LTT',
+            region       = 'SR1All3_LTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -852,11 +1209,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuMu_TLL',
+            region       = 'SR1All3_TLL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -868,11 +1225,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuMu_LTL',
+            region       = 'SR1All3_LTL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -884,11 +1241,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuMu_LLT',
+            region       = 'SR1All3_LLT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -900,11 +1257,11 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR1BMuMuMu_LLL',
+            region       = 'SR1All3_LLL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
@@ -916,7 +1273,7 @@ def analyze(config):
                            ['ZVeto',None],
                            ['pTHAbove100',None],
                            ['MuonDRBelow35',None],
-                           ['mTTotAbove250',None],
+                           ['SumPTLepAbove300',None],
                            ],
             )
 

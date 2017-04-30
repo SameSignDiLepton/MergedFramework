@@ -24,6 +24,8 @@ hist_list.append(h_muons_mVis)
 hist_list.append(h_muons_mVisTot)
 hist_list.append(h_muons_mTTot)
 hist_list.append(h_muons_pTH)
+hist_list.append(h_SumPTLep)
+hist_list.append(h_SumPTLepMET)
 
 # -------
 # muons

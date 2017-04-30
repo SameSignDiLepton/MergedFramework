@@ -1753,6 +1753,10 @@ class CutAlg(pyframe.core.Algorithm):
     
      
   #__________________________________________________________________________
+    def cut_SumPTLepAbove300(self):
+      return self.store['SumPTLep'] > 300*GeV
+    
+  #__________________________________________________________________________
     def cut_mTTotAbove250(self):
       return self.store['mTTot'] > 250*GeV
     

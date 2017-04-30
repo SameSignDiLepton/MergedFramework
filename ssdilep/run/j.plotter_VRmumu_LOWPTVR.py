@@ -87,6 +87,12 @@ def analyze(config):
     loop += ssdilep.algs.vars.ParticlesBuilder(
         key='muons',
         )
+    loop += ssdilep.algs.vars.ParticlesBuilder(
+        key='electrons',
+        )
+    loop += ssdilep.algs.vars.BuildLooseElectrons(
+        key_electrons='electrons',
+        )
 
     ## build MET
     ## ---------------------------------------
@@ -289,7 +295,7 @@ def analyze(config):
     ## configure histograms
     ## ---------------------------------------
     hist_list = []
-    hist_list += ssdilep.hists.MuMain_hists.hist_list
+    hist_list += ssdilep.hists.SR1Muons_hists.hist_list
     #hist_list += ssdilep.hists.PtOnly_hists.hist_list
     
     
@@ -311,6 +317,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuTT',['Mu0AllSF','Mu1AllSF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -323,6 +330,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuLT',['Mu0RecoSF','Mu1AllSF','Mu0FF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -335,6 +343,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuTL',['Mu0AllSF','Mu1RecoSF','Mu1FF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -347,6 +356,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuLL',['Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
+              ['ZVeto',None],
               ],
             )
     
@@ -362,6 +372,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuTTT',['Mu0AllSF','Mu1AllSF','Mu2AllSF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -374,6 +385,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuTTL',['Mu0AllSF','Mu1AllSF','Mu2RecoSF','Mu2FF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -386,6 +398,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuTLT',['Mu0AllSF','Mu2AllSF','Mu1RecoSF','Mu1FF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -398,6 +411,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuLTT',['Mu1AllSF','Mu2AllSF','Mu0RecoSF','Mu0FF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -410,6 +424,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuLLT',['Mu2AllSF','Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -422,6 +437,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuLTL',['Mu1AllSF','Mu0RecoSF','Mu2RecoSF','Mu0FF','Mu2FF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -434,6 +450,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuTLL',['Mu0AllSF','Mu1RecoSF','Mu2RecoSF','Mu1FF','Mu2FF']],
+              ['ZVeto',None],
               ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
@@ -446,6 +463,7 @@ def analyze(config):
               ['pTHlow80',None],
               ['SingleMuPassAndMatchPresc',['MuTrigSFRecoMedium']],
               ['MuLLL',['Mu0RecoSF','Mu1RecoSF','Mu2RecoSF','Mu0FF','Mu1FF','Mu2FF']],
+              ['ZVeto',None],
               ],
             )
     """    

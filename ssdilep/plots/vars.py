@@ -7,7 +7,7 @@ variables for all the channels
 
 ## modules
 from var import Var
-from funcs import generateLogBins
+#from funcs import generateLogBins
 
 ## Cutflows
 ## ---------------------------------------
@@ -20,8 +20,8 @@ cutflow_weighted_presel   = Var(name = 'cutflow_weighted_presel',log=False)
 cutflow_ZCR               = Var(name = 'cutflow_ZCR',log=False)
 cutflow_weighted_ZCR      = Var(name = 'cutflow_weighted_ZCR',log=False)
 
-bins_pt = generateLogBins(35,30,2000)
-bins_pt_2 = generateLogBins(20,30,1000)
+#bins_pt = generateLogBins(35,30,2000)
+#bins_pt_2 = generateLogBins(20,30,1000)
 
 ## Event variables
 ## ---------------------------------------
@@ -104,6 +104,9 @@ muons_mVis = Var(name     = 'muons_mVis',
               #xmax    = 800.,
               xmax    = 1500.,
               rebin   = 20,
+              #rebinVar = [0.,200.,250.,300.,350.,400.,500.,600.,700.,800.,1500.], #3MuSR
+              #rebinVar = [0.,200.,250.,300.,350.,400.,500.,600.,1500.], #2MuSR
+              #rebinVar = [0.,25.,50.,75.,100.,125.,150.,175.,200.,1500.], #CR
               #rebin   = 1,
               log     = False,
               )
@@ -175,6 +178,22 @@ muons_pTH = Var(name  = 'muons_pTH',
               xmin    = 0.,
               xmax    = 500.,
               rebin   = 10,
+              log     = False,
+              )
+
+SumPTLep = Var(name  = 'SumPTLep',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 2000.,
+              rebin   = 40,
+              log     = False,
+              )
+
+SumPTLepMET = Var(name  = 'SumPTLepMET',
+              path    = 'event',
+              xmin    = 0.,
+              xmax    = 2000.,
+              rebin   = 40,
               log     = False,
               )
 
@@ -766,7 +785,7 @@ leplead_pt = Var(name = 'leplead_pt',
               #xmax   = 120.,
               #rebin  = 20,
               rebin  = 1,
-              rebinVar = bins_pt,   
+              #rebinVar = bins_pt,   
               log    = False,
               logx   = True,   
               )
@@ -777,7 +796,7 @@ lepsublead_pt = Var(name = 'lepsublead_pt',
               xmax   = 300.,
               #xmax   = 120.,
               rebin  = 1,
-              rebinVar = bins_pt_2,   
+              #rebinVar = bins_pt_2,   
               #rebin  = 5,
               log    = False,
               logx   = True,   
@@ -885,7 +904,7 @@ lep3_pt = Var(name = 'lep3_pt',
               #xmax   = 120.,
               #rebin  = 20,
               rebin  = 1,
-              rebinVar = bins_pt_2,   
+              #rebinVar = bins_pt_2,   
               log    = False,
               logx   = True,   
               )
@@ -1017,6 +1036,8 @@ vars_list.append(muons_dR)
 vars_list.append(muons_chargeprod)
 vars_list.append(muons_chargesum)
 vars_list.append(muons_pTH)
+vars_list.append(SumPTLep)
+vars_list.append(SumPTLepMET)
 
 vars_list.append(mulead_pt)
 vars_list.append(mulead_eta)
