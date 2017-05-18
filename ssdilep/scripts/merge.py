@@ -5,7 +5,7 @@ import histmgr
 import funcs
 import os
 
-from ssdilep.samples import samples
+from ssdilep.samples import samples, samples_DCH
 from ssdilep.plots   import vars_mumu
 from ssdilep.plots   import vars
 from systematics     import *
@@ -35,7 +35,12 @@ parser.add_option('-f', '--fakest', dest='fakest',
                   help='choose fake estimate',metavar='FAKEST',default=None)
 parser.add_option('-t', '--tag', dest='tag',
                   help='outfile tag',metavar='TAG',default=None)
-
+parser.add_option('-R', '--rebinToEq', dest='rebinToEq',
+                  help='rebinToEq',metavar='REBINTOEQ',default=None)
+parser.add_option('-V', '--varName', dest='varName',
+                  help='varName',metavar='VARNAME',default=None)
+parser.add_option('-L', '--logy', dest='logy',
+                  help='logy',metavar='LOGY',default=None)
 
 (options, args) = parser.parse_args()
 
@@ -43,7 +48,8 @@ parser.add_option('-t', '--tag', dest='tag',
 # Configuration
 #-----------------
 #lumi =  18232.8
-lumi =  33257.2 + 3212.96
+lumi =  36074.56
+#lumi =  33257.2 + 3212.96
 #lumi =  33257.2 #+ 3212.96
 
 # Control regions
@@ -81,6 +87,37 @@ signals = []
 #signals.append(samples.all_DCH)
 #signals.append(samples.DCH800)
 
+#signals.append(samples_DCH.DCH300_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH300_HLMpMp_HLEmMm)
+#signals.append(samples_DCH.DCH300_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH500_HLEpMp_HLEmMm)
+"""
+signals.append(samples_DCH.DCH250_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH300_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH350_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH400_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH500_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH550_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH600_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH650_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH700_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH750_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH800_HLEpMp_HLEmMm)
+signals.append(samples_DCH.DCH850_HLEpMp_HLEmMm)
+"""
+#signals.append(samples_DCH.DCH900_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH1000_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH500_HLEpMp_HLEmEm)
+#signals.append(samples_DCH.DCH500_HLEpMp_HLMmMm)
+#signals.append(samples_DCH.DCH700_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH800_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH900_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH1000_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH1200_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH500_HLEpMp_HLEmMm)
+#signals.append(samples_DCH.DCH300_HLEpMp_HLEmMm)
+
+recom_signals  = [ s.copy() for s in signals ]
 
 #--------------
 # Estimators
@@ -94,7 +131,7 @@ fake_subtraction_regions = []
 
 reg_prefix, reg_suffix = funcs.get_pref_and_suff(options.region)
 
-if reg_suffix == "MAINREG":
+if reg_suffix == "MAINREG" or "TESTING":
   
   # including all regions for fake-factor method
   # ---------------------------------------------
@@ -132,12 +169,22 @@ if reg_suffix == "MAINREG":
     fake_subtraction_regions = []
     fake_subtraction_regions += ["LLT","LTL","TLL"]
 
+  if options.fakest== "FourLepRegions":
+    main_addition_regions = ["TTTT"]
+    
+    fake_addition_regions = []
+    fake_addition_regions += ["TTTL","TTLT","LTTT","TLTT"]
+
+    fake_subtraction_regions = []
+    fake_subtraction_regions += ["LLTT","LTTL","TLLT","TTLL","TLTL","LTLT"]
+
 else:
   
   if options.fakest == "Subtraction":
-    main_addition_regions =  fake_addition_regions = [""]
+    main_addition_regions =  fake_addition_regions = ["TTTT"]
     reg_prefix            =  options.region
 
+"""
 fakes.estimator = histmgr.AddRegEstimator(
       hm                  = hm, 
       sample              = fakes,
@@ -146,13 +193,13 @@ fakes.estimator = histmgr.AddRegEstimator(
       addition_regions    = ["_".join([reg_prefix]+[suffix]).rstrip("_") for suffix in fake_addition_regions],
       subtraction_regions = ["_".join([reg_prefix]+[suffix]).rstrip("_") for suffix in fake_subtraction_regions]
       )
-
-for s in recom_mc_bkg + [recom_data]:
+"""
+for s in recom_mc_bkg + recom_signals + [recom_data]:
   s.estimator = histmgr.AddRegEstimator(
       hm               = hm, 
       sample           = s,
       data_sample      = data,
-      mc_samples       = mc_bkg, 
+      mc_samples       = mc_bkg + signals, 
       addition_regions = ["_".join([reg_prefix]+[suffix]).rstrip("_") for suffix in main_addition_regions]
       )
 
@@ -169,7 +216,7 @@ mc_sys = [
 #for s in mc_bkg + signals:
 #    s.estimator.add_systematics(mc_sys)
 
-fakes.estimator.add_systematics(FF)
+#fakes.estimator.add_systematics(FF)
 
 mumu_vdict  = vars.vars_dict
 
@@ -179,14 +226,14 @@ mumu_vdict  = vars.vars_dict
 
 ## order backgrounds for plots
 plot_ord_bkg = []
-plot_ord_bkg.append( fakes )
+#plot_ord_bkg.append( fakes )
 plot_ord_bkg += recom_mc_bkg
 
 
 if options.makeplot == "True":
  funcs.plot_hist(
     backgrounds   = plot_ord_bkg,
-    signal        = signals, 
+    signal        = recom_signals, 
     data          = recom_data,
     region        = options.region,
     label         = options.label,
@@ -207,15 +254,18 @@ if options.makeplot == "True":
 else:
  funcs.write_hist(
          backgrounds = plot_ord_bkg,
-         signal      = signals, # This can be a list
-         #data        = recom_data,
+         signal      = recom_signals, # This can be a list
+         data        = recom_data,
          region      = options.region,
          icut        = int(options.icut),
          histname    = os.path.join(mumu_vdict[options.vname]['path'],mumu_vdict[options.vname]['hname']),
          rebin       = mumu_vdict[options.vname]['rebin'],
          rebinVar    = mumu_vdict[options.vname]['rebinVar'],
-         sys_dict    = None,
-         outname     = plotsfile
+         sys_dict    = None, #sys_dict if DO_SYS else None,
+         outname     = plotsfile,
+         regName     = options.tag,
+         rebinToEq   = True if options.rebinToEq=="True" else False,
+         varName     = str(options.varName)
          )
  ## EOF
 

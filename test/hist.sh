@@ -2,85 +2,49 @@
 
 ## Batch
 
-#INPATH="/coepp/cephfs/mel/fscutti/ssdilep/EXOT12_common_v1Ntuples/merged/nominal"
-INPATH="/coepp/cephfs/mel/fscutti/ssdilep/EXOT12_common_v3Ntuples/merged/nominal"
-#INPATH="/coepp/cephfs/mel/fscutti/ssdilep/EXOT12_common_v2Ntuples/nominal"
+#INPATH="/home/ATLAS-T3/ucchielli/SSCode/SSDiLep/ssdilep/Zmumu/nominal"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v3/MCtoRun/Sherpa_CT10_VV_llmumu_4000M5000_tree.root/"
+INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v3/MCtoRun/SignalSamples/"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v3/MCtoRun/MadGraphPythia8EvtGen_A14NNPDF23LO_ttZllonshell_Np1_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v3/Data/299243.physics_Main_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v3/MCtoRun/Sherpa_221_NNPDF30NNLO_Zmumu_MAXHTPTV280_500_CVetoBVeto_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v3/MCtoRun/Sherpa_221_NNPDF30NNLO_lllv_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v3/Data/302053.physics_Main_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/Data/302393.physics_Main_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v2/Data/302925.physics_Main_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/MCtoRun/Pythia8EvtGen_A14NNPDF23LO_DCH500_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/MCtoRun/PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/Data/300345.physics_Main_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/MCtoRun/Pythia8EvtGen_A14NNPDF23LO_DCH300_tree.root/"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/MCtoRun/Pythia8EvtGen_A14NNPDF23LO_DCH1000_tree.root/" 
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/MCtoRun/Sherpa_CT10_VV_llee_50M150_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/MCtoRun/Sherpa_CT10_VV_llee_4000M5000_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/MCtoRun/Pythia8EvtGen_A14NNPDF23LO_DCH500_tree.root"
+#INPATH="/gpfs_data/local/atlas/ucchielli/ExoticNtuples/v1/MCtoRun/Sherpa_CT10_VV_llmumu_50M150_tree.root"
+#INPATH="/home/ATLAS-T3/ucchielli/SSCode/SSDiLep/user.gucchiel.SSDiLep.v1Ntuples.364118.Sherpa_221_NNPDF30NNLO_Zee_MAXHTPTV70_140_CFilterBVeto_tree.root"
+INSCRIPT="/home/ATLAS-T3/ucchielli/Katja/MergedFramework/ssdilep/run/"
+#SCRIPT="j.plotter_SignalEfficiencyStudy.py"
+#SCRIPT="j.plotter_BkgEstimation.py"
+#SCRIPT="j.plotter_SSInclusiveValidation.py"
+#SCRIPT="j.plotter_CRemu_SSVR.py"
+#SCRIPT="j.plotter_VR2.py"
+#SCRIPT="j.plotter_CRemu_diboson.py"
+#SCRIPT="j.plotter_CRemu_ttbar.py"
+SCRIPT="j.plotter_emu_SR12_syst.py"
+#SCRIPT="j.plotter_CR2EEEE.py"
+#SCRIPT="j.plotter_CRemu_Zveto.py"
 
-#INPATH="/coepp/cephfs/mel/fscutti/ssdilep/HIGG3D3_v7/merged/nominal"
-#INPATH="/coepp/cephfs/mel/fscutti/ssdilep/HIGG3D3_v8/merged/nominal"
-#INPATH="/coepp/cephfs/mel/fscutti/ssdilep/nHIGG3D3_v9/merged/nominal"
-
-#INPATH="/data/fscutti/ORstudy/ORtest"
-
-INSCRIPT="../ssdilep/run"
-
-#SCRIPT="j.plotter_FF.py"
-#SCRIPT="j.plotter_SR2.py"
-#SCRIPT="j.plotter_FF_TMP.py"
-#SCRIPT="j.plotter_STUDY.py"
-#SCRIPT="j.plotter_VR_OneMuPair.py"
-#SCRIPT="j.plotter_TAndP.py"
-#SCRIPT="j.plotter_CRele_ttbar.py"
-SCRIPT="j.plotter_SR1_MuMu.py"
-#SCRIPT="j.plotter_TEST.py"
-#SCRIPT="j.plotter_VR_OneMuPair.py"
-#SCRIPT="j.plotter_TAndP.py"
-
-
-
-#SCRIPT="j.plotter_VRmumu_SSVR2b.py"
-#SCRIPT="j.plotter_VRmumu_LOWPTVR.py"
-SCRIPT="j.plotter_VRmumu_HIDRVR.py"
-#SCRIPT="j.plotter_CRmumu_SSCR.py"
-
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00280273.root --sampletype="data"  #--events=20000
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00302393.root --sampletype="data"  --events=20000
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00282992.root --sampletype="data" --events=20000 #--config="sys:FF_DN"
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00302380.root --sampletype="data" --events=200000 #--config="sys:FF_DN" # example of triglist probs
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00302380.root --samplename="physics_Main_00302380" --sampletype="data" --events=2000 #--config="sys:FF_DN" # example of triglist probs
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00304008.root --sampletype="data" --samplename="physics_Main_00304008" --events=50000 #--config="sys:FF_DN" # example of triglist probs
-
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00282631.root  --samplename="physics_Main_00282631" --sampletype="data" #--events=1000 #--config="sys:FF_DN" # example of triglist probs
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Sherpa_NNPDF30NNLO_Wmunu_Pt0_70_CVetoBVeto.root --sampletype="mc" --samplename="Sherpa_NNPDF30NNLO_Wmunu_Pt0_70_CVetoBVeto" --events=2000   #--config="sys:FF_DN" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Sherpa_NNPDF30NNLO_Zmumu_Pt0_70_BFilter.root  --sampletype="mc" --events=4000   #--config="sys:FF_DN" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Sherpa_CT10_VV_muvmuv_2000M3000.root  --sampletype="mc" --events=20000   #--config="sys:FF_DN" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Sherpa_CT10_llvv.root  --sampletype="mc" --events=20000   #--config="sys:FF_DN" 
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Pythia8EvtGen_A14NNPDF23LO_DCH800.root  --sampletype="mc" --samplename="Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLMmMm" --events=10000   #--config="sys:FF_DN" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Pythia8EvtGen_A14NNPDF23LO_DCH800.root  --sampletype="mc" --samplename="Pythia8EvtGen_A14NNPDF23LO_DCH800_HRMpMp_HRMmMm" --events=10000   #--config="sys:FF_DN" 
-
-python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Pythia8EvtGen_A14NNPDF23LO_DCH800.root  --sampletype="mc" --samplename="Pythia8EvtGen_A14NNPDF23LO_DCH800_HLMpMp_HLEmEm" --events=10000   #--config="sys:FF_DN" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Pythia8EvtGen_A14NNPDF23LO_DCH800.root  --sampletype="mc" --samplename="Pythia8EvtGen_A14NNPDF23LO_DCH800_HRMpMp_HRMmMm" --events=10000   #--config="sys:FF_DN" 
-
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Sherpa_CT10_ggllll.root  --sampletype="mc" --samplename="Sherpa_CT10_ggllll" --events=10000   #--config="sys:FF_DN" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Sherpa_221_NNPDF30NNLO_llll.root  --samplename="Sherpa_221_NNPDF30NNLO_llll" --sampletype="mc" --events=10000   #--config="sys:FF_DN" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ0W.root  --sampletype="mc" #--events=4000   #--config="sys:FF_DN" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.root --samplename="PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad" --sampletype="mc" --events=20000   #--config="sys:FF_DN" 
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Pythia8EvtGen_A14NNPDF23LO_DCH300.root  --sampletype="mc" --samplename="DCH300_HRMpMp_HRMmMm" --events=10000   #--config="sys:FF_DN" 
-python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Pythia8EvtGen_A14NNPDF23LO_DCH300.root  --sampletype="mc" --samplename="DCH300_HLMpMp_HLMmMm" --events=10000   #--config="sys:FF_DN" 
-
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00304008_BTagOR.root --samplename="physics_Main_00304008_BTagOR" --sampletype="data" > physics_Main_00304008_BTagOR.log 2>&1
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00304008_NewOR.root --samplename="physics_Main_00304008_NewOR" --sampletype="data" > physics_Main_00304008_NewOR.log 2>&1
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00304008_OldOR.root --samplename="physics_Main_00304008_OldOR" --sampletype="data" > physics_Main_00304008_OldOR.log 2>&1
-
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00298633.root --sampletype="data" --samplename="physics_Main_00298633" --events=10000
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00300655.root --sampletype="data" --samplename="physics_Main_00300655" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00300687.root --sampletype="data" --samplename="physics_Main_00300687" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00307306.root --sampletype="data" --samplename="physics_Main_00307306" 
-
-
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00279867.root --sampletype="data" --samplename="physics_Main_00279867" 
-#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00279515.root --sampletype="data" --samplename="physics_Main_00279515" 
-
-
-
-
-
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/zumu.root --sampletype="mc" #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/user.gucchiel.9814654._000001.tree.root.2   --sampletype="mc" #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/user.mmuskinj.10363561._000001.tree.root --sampletype="mc" #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/user.mmuskinj.10919469._000001.tree.root --sampletype="mc" --samplename="ntuple" --config="max_entry:20000"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/DCH450.root  --sampletype="mc" --samplename="DCH450_HREpMp_HREmMm" #--config="max_entry:20000"
+python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/DCH900.root   --sampletype="mc" --samplename="ntuple"  #--config="sys:TRIG_UP"  #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/user.gucchiel.9697164._000005.tree.root   --sampletype="data" #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/user.gucchiel.9647165._000002.tree.root   --sampletype="data" #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/user.gucchiel.9647460._000002.tree.root  --sampletype="data" #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/user.gucchiel.9814654._000001.tree.root.2   --sampletype="mc" #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/user.gucchiel.9635625._000001.tree.root   --sampletype="mc" #--events=2000 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/physics_Main_00302380.root --sampletype="data" --events=200 #--config="sys:FF_DN"
+#python ${INSCRIPT}/${SCRIPT} --input ${INPATH}/Sherpa_NNPDF30NNLO_Zmumu_Pt500_700_BFilter.root --sampletype="mc" --events=200   #--config="sys:FF_DN" 
 
