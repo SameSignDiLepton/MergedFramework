@@ -34,7 +34,7 @@ def analyze(config):
     chain = ROOT.TChain(config['tree'])
     for fn in config['input']: chain.Add(fn)
 
-    ##-------------------------------------------------------------------------
+     ##-------------------------------------------------------------------------
     ## systematics 
     ##------------------------------------------------------------------------- 
     """
@@ -207,7 +207,7 @@ def analyze(config):
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='FourLeptons')
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='ZeroTotalCharge')
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='BadJetVeto')
-    loop += ssdilep.al gs.algs.CutAlg(cutflow='presel',cut='BJetVeto')
+    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='BJetVeto')
     #loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='DCHFilter') 
 
     loop += ssdilep.algs.vars.SR2ChannelFlavour()
@@ -232,14 +232,13 @@ def analyze(config):
             scale     = None,
             )
     """
-    
     loop += ssdilep.algs.EvWeights.ChargeFlipEleSF(
         key='ChargeFlipEleSF',
         chargeFlipSF=True,
         config_fileCHF=os.path.join(main_path,'ssdilep/data/chargeFlipRates-28-03-2017.root'),
         sys_CF = sys_CF,
         )
-
+    
     #Muon trigger efficiency implementation
     """
     loop += ssdilep.algs.EvWeights.EffCorrPair(
@@ -473,276 +472,272 @@ def analyze(config):
     ## make plots
     ##-------------------------------------------------------------------------
 
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_TTTT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTTTT',['Ele0AllSF','Ele1AllSF','Ele2AllSF','Ele3AllSF']],
-                           ['IsControlRegion2',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_TTTL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTTTL',['Ele0AllSF','Ele1AllSF','Ele2AllSF','Ele3RecoSF','Ele3FF']],
-                           ['IsControlRegion2',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_TTLT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTTLT',['Ele0AllSF','Ele1AllSF','Ele2RecoSF','Ele3AllSF','Ele2FF']],
-                           ['IsControlRegion2',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_TLTT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTLTT',['Ele0AllSF','Ele1RecoSF','Ele2AllSF','Ele3AllSF','Ele1FF']],
-                           ['IsControlRegion2',None],
-                           ],
-            )
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_LTTT',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleLTTT',['Ele0RecoSF','Ele1RecoSF','Ele2AllSF','Ele3AllSF','Ele0FF']],
-                           ['IsControlRegion2',None],
-                           ],
-            )
 
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_TTLL',
+            region       = 'CR2EEMUMU_TTTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTTLL',['Ele0AllSF','Ele1AllSF','Ele2RecoSF','Ele3RecoSF','Ele2FF','Ele3FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTTTT',['Ele0AllSF','Ele1AllSF','Mu0AllSF','Mu1AllSF']],
                            ['IsControlRegion2',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_TLTL',
+            region       = 'CR2EEMUMU_TTTL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTLTL',['Ele0AllSF','Ele1RecoSF','Ele2AllSF','Ele3RecoSF','Ele1FF','Ele3FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTTTL',['Ele0AllSF','Ele1AllSF','Mu0AllSF','Mu1RecoSF','Mu1FF']],
                            ['IsControlRegion2',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_LLTT',
+            region       = 'CR2EEMUMU_TTLT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleLLTT',['Ele0RecoSF','Ele1RecoSF','Ele2AllSF','Ele3AllSF','Ele0FF','Ele1FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTTLT',['Ele0AllSF','Ele1AllSF','Mu0RecoSF','Mu1AllSF','Mu0FF']],
                            ['IsControlRegion2',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_LTLT',
+            region       = 'CR2EEMUMU_TLTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleLTLT',['Ele0RecoSF','Ele1AllSF','Ele2RecoSF','Ele3AllSF','Ele0FF','Ele2FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTLTT',['Ele0AllSF','Ele1RecoSF','Mu0AllSF','Mu1AllSF','Ele1FF']],
                            ['IsControlRegion2',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_LTTL',
+            region       = 'CR2EEMUMU_LTTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleLTTL',['Ele0RecoSF','Ele1AllSF','Ele2AllSF','Ele3RecoSF','Ele0FF','Ele3FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuLTTT',['Ele0RecoSF','Ele1AllSF','Mu0AllSF','Mu1AllSF','Ele0FF']],
                            ['IsControlRegion2',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'CR2EEEE_TLLT',
+            region       = 'CR2EEMUMU_TTLL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTLLT',['Ele0AllSF','Ele1RecoSF','Ele2RecoSF','Ele3AllSF','Ele1FF','Ele2FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTTLL',['Ele0AllSF','Ele1AllSF','Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
                            ['IsControlRegion2',None],
                            ],
             )
-
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'CR2EEMUMU_TLTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTLTL',['Ele0AllSF','Ele1RecoSF','Mu0AllSF','Mu1RecoSF','Ele1FF','Mu1FF']],
+                           ['IsControlRegion2',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'CR2EEMUMU_LLTT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuLLTT',['Ele0RecoSF','Ele1RecoSF','Mu0AllSF','Mu1AllSF','Ele0FF','Ele1FF']],
+                           ['IsControlRegion2',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'CR2EEMUMU_LTLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuLTLT',['Ele0RecoSF','Ele1AllSF','Mu0RecoSF','Mu1AllSF','Ele0FF','Mu0FF']],
+                           ['IsControlRegion2',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'CR2EEMUMU_LTTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuLTTL',['Ele0RecoSF','Ele1AllSF','Mu0AllSF','Mu1RecoSF','Ele0FF','Mu1FF']],
+                           ['IsControlRegion2',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'CR2EEMUMU_TLLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTLLT',['Ele0AllSF','Ele1RecoSF','Mu0RecoSF','Mu1AllSF','Ele1FF','Mu0FF']],
+                           ['IsControlRegion2',None],
+                           ],
+            )
     
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_TTTT',
+            region       = 'SR2EEMUMU_TTTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTTTT',['Ele0AllSF','Ele1AllSF','Ele2AllSF','Ele3AllSF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTTTT',['Ele0AllSF','Ele1AllSF','Mu0AllSF','Mu1AllSF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
-                           ],
-            )
-
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_TTTL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTTTL',['Ele0AllSF','Ele1AllSF','Ele2AllSF','Ele3RecoSF','Ele3FF']],
-                           ['IsSignalRegion2',None],
                            ['ZVeto',None],
-                           ['DeltaMassOverMass',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_TTLT',
+            region       = 'SR2EEMUMU_TTTL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTTLT',['Ele0AllSF','Ele1AllSF','Ele2RecoSF','Ele3AllSF','Ele2FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTTTL',['Ele0AllSF','Ele1AllSF','Mu0AllSF','Mu1RecoSF','Mu1FF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_TLTT',
+            region       = 'SR2EEMUMU_TTLT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTLTT',['Ele0AllSF','Ele1RecoSF','Ele2AllSF','Ele3AllSF','Ele1FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTTLT',['Ele0AllSF','Ele1AllSF','Mu0RecoSF','Mu1AllSF','Mu0FF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_LTTT',
+            region       = 'SR2EEMUMU_TLTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleLTTT',['Ele0RecoSF','Ele1RecoSF','Ele2AllSF','Ele3AllSF','Ele0FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTLTT',['Ele0AllSF','Ele1RecoSF','Mu0AllSF','Mu1AllSF','Ele1FF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
-                           ],
-            )
-
-    loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_TTLL',
-            plot_all     = False,
-            do_var_check = True,
-            hist_list    = hist_list,
-            cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTTLL',['Ele0AllSF','Ele1AllSF','Ele2RecoSF','Ele3RecoSF','Ele2FF','Ele3FF']],
-                           ['IsSignalRegion2',None],
                            ['ZVeto',None],
-                           ['DeltaMassOverMass',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_TLTL',
+            region       = 'SR2EEMUMU_LTTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTLTL',['Ele0AllSF','Ele1RecoSF','Ele2AllSF','Ele3RecoSF','Ele1FF','Ele3FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuLTTT',['Ele0RecoSF','Ele1AllSF','Mu0AllSF','Mu1AllSF','Ele0FF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_LLTT',
+            region       = 'SR2EEMUMU_TTLL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleLLTT',['Ele0RecoSF','Ele1RecoSF','Ele2AllSF','Ele3AllSF','Ele0FF','Ele1FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTTLL',['Ele0AllSF','Ele1AllSF','Mu0RecoSF','Mu1RecoSF','Mu0FF','Mu1FF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_LTLT',
+            region       = 'SR2EEMUMU_TLTL',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleLTLT',['Ele0RecoSF','Ele1AllSF','Ele2RecoSF','Ele3AllSF','Ele0FF','Ele2FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTLTL',['Ele0AllSF','Ele1RecoSF','Mu0AllSF','Mu1RecoSF','Ele1FF','Mu1FF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_LTTL',
+            region       = 'SR2EEMUMU_LLTT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleLTTL',['Ele0RecoSF','Ele1AllSF','Ele2AllSF','Ele3RecoSF','Ele0FF','Ele3FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuLLTT',['Ele0RecoSF','Ele1RecoSF','Mu0AllSF','Mu1AllSF','Ele0FF','Ele1FF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
                            ],
             )
     loop += ssdilep.algs.algs.PlotAlg(
-            region       = 'SR2EEEE_TLLT',
+            region       = 'SR2EEMUMU_LTLT',
             plot_all     = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow     = [
-                           ['TwoSSElectronPairs',None],
-                           ['EleTLLT',['Ele0AllSF','Ele1RecoSF','Ele2RecoSF','Ele3AllSF','Ele1FF','Ele2FF']],
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuLTLT',['Ele0RecoSF','Ele1AllSF','Mu0RecoSF','Mu1AllSF','Ele0FF','Mu0FF']],
                            ['IsSignalRegion2',None],
-                           ['ZVeto',None],
                            ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
                            ],
             )
-
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR2EEMUMU_LTTL',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuLTTL',['Ele0RecoSF','Ele1AllSF','Mu0AllSF','Mu1RecoSF','Ele0FF','Mu1FF']],
+                           ['IsSignalRegion2',None],
+                           ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
+                           ],
+            )
+    loop += ssdilep.algs.algs.PlotAlg(
+            region       = 'SR2EEMUMU_TLLT',
+            plot_all     = False,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow     = [
+                           ['TwoSSElectronMuonPairsEEMM',None],
+                           ['EEMuMuTLLT',['Ele0AllSF','Ele1RecoSF','Mu0RecoSF','Mu1AllSF','Ele1FF','Mu0FF']],
+                           ['IsSignalRegion2',None],
+                           ['DeltaMassOverMass',None],
+                           ['ZVeto',None],
+                           ],
+            )
 
     loop += pyframe.algs.HistCopyAlg()
 
