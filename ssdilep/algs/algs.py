@@ -62,6 +62,43 @@ class CutAlg(pyframe.core.Algorithm):
         assert hasattr(self,cut_function),"cut %s doesnt exist!'"%(cutname)
         self.store[cutname] = result = getattr(self,cut_function)()
         return result
+        
+        
+        
+        ####################   TAU CUTS   ##################################
+    #__________________________________________________________________________
+    def cut_OSTauEle(self):
+      tau =self.store['taus']
+      ele = self.store['electrons_loose']	
+      
+      if len(tau) == 1 and len(ele) == 1:
+        if tau[0].charge * ele[0].trkcharge < 0.0:
+          return True
+      return False	
+    #__________________________________________________________________________
+    def cut_TwoOSTau(self):
+      taus  = self.store['taus']
+      if len(taus) == 2:
+        if taus[0].charge * taus[1].charge < 0.0:
+          return True
+      return False
+    #__________________________________________________________________________
+    def cut_TaudPhiLessThan95Pi(self):
+        if abs(self.store['tau_dphi'])  <= 0.95 * math.pi: return True
+        return False     
+    #__________________________________________________________________________    
+    def cut_TaudPhiLessThan90Pi(self):
+        if abs(self.store['tau_dphi'])  <= 0.90 * math.pi: return True
+        return False  
+    #__________________________________________________________________________    
+    def cut_noCut(self):
+        return True
+        
+    		#######################   OTHER CUTS    ###############################
+    		
+    		
+    		
+    		
     #__________________________________________________________________________
     def cut_AtLeastTwoMuons(self):
       return self.chain.nmuon > 1
@@ -1723,6 +1760,15 @@ class CutAlg(pyframe.core.Algorithm):
       for m in electrons:
         passed = passed and m.tlv.Pt()>=30.0*GeV
       return passed
+      
+       #__________________________________________________________________________
+    def cut_AllElePt30Simon(self):
+      electrons = self.store['electrons']
+      
+      for m in electrons:
+      	if (m.tlv.Pt()>=30.0*GeV): return True
+      return False
+      
     #__________________________________________________________________________
 
     def cut_AtLeastOneElePt28(self):
@@ -2314,6 +2360,38 @@ class CutAlg(pyframe.core.Algorithm):
 
 
      #________________________________________________________________________
+     
+    def cut_ZMassWindowAS(self):
+        electrons = self.store['electrons']
+        mZ = 91*GeV
+        if len(electrons)==2 :
+          if abs( (electrons[0].tlv + electrons[1].tlv).M() - mZ) < 14.0*GeV:
+            return True;
+        return False
+
+    def cut_ZMassWindowASSideband(self):
+        electrons = self.store['electrons']
+        mZ = 91*GeV
+        if len(electrons)==2 :
+          if (abs( (electrons[0].tlv + electrons[1].tlv).M() - mZ) > 14.0*GeV) and (abs( (electrons[0].tlv + electrons[1].tlv).M() - mZ) < 28.0*GeV):
+            return True;
+        return False
+
+    def cut_ZMassWindowSS(self):
+        electrons = self.store['electrons']
+        mZ = 89*GeV # 2 GeV shift for the SS Z peak
+        if len(electrons)==2 :
+          if abs( (electrons[0].tlv + electrons[1].tlv).M() - mZ) < 15.8*GeV:
+            return True;
+        return False
+
+    def cut_ZMassWindowSSSideband(self):
+        electrons = self.store['electrons']
+        mZ = 89*GeV # 2 GeV shift for the SS Z peak
+        if len(electrons)==2 :
+          if (abs( (electrons[0].tlv + electrons[1].tlv).M() - mZ) > 15.8*GeV) and (abs( (electrons[0].tlv + electrons[1].tlv).M() - mZ) < 31.6*GeV):
+            return True;
+        return False
 
 
     #__________________________________________________________________________
@@ -4230,8 +4308,10 @@ class PlotAlg(pyframe.algs.CutFlowAlg,CutAlg):
             elif h.get_name() == "Hist2D": 
               h.instance = self.hist(h.hname, "ROOT.TH2F('$', ';%s;%s', %d, %lf, %lf, %d, %lf, %lf)" % (h.hname,h.hname,h.nbinsx,h.xmin,h.xmax,h.nbinsy,h.ymin,h.ymax), dir=os.path.join(region, '%s'%h.dir))
               h.set_axis_titles()
-
-
+              
+         
+    
+  
         # ---------------
         # Fill histograms
         # ---------------
@@ -4253,11 +4333,12 @@ class PlotAlg(pyframe.algs.CutFlowAlg,CutAlg):
               if h.instance and var!=-999.: 
                   h.fill(var, weight)
                   if ("mc" not in self.sampletype):
-                      flavour =self.store['ChannelFlavour']        
-                      print "Passed all SR2 cuts"
-                      print "RunNumber: ", self.chain.runNumber
-                      print "EventNumber: ", self.chain.eventNumber
-                      print "Channel Flavour: ", flavour
+                      #print(self.store['ChannelFlavour']) 
+                      flavour = self.store['ChannelFlavour']        
+                      #print "Passed all SR2 cuts"
+                      #print "RunNumber: ", self.chain.runNumber
+                      #print "EventNumber: ", self.chain.eventNumber
+                      #print "Channel Flavour: ", flavour
 
             elif h.get_name() == "Hist2D":
               varx = -999.
@@ -4267,10 +4348,10 @@ class PlotAlg(pyframe.algs.CutFlowAlg,CutAlg):
                   h.fill(varx,vary, weight)
                   if ("mc" not in self.sampletype):
                       flavour =self.store['ChannelFlavour']        
-                      print "Passed all SR2 cuts"
-                      print "RunNumber: ", self.chain.runNumber
-                      print "EventNumber: ", self.chain.eventNumber
-                      print "Channel Flavour: ", flavour
+                      #print "Passed all SR2 cuts"
+                      #print "RunNumber: ", self.chain.runNumber
+                      #print "EventNumber: ", self.chain.eventNumber
+                      #print "Channel Flavour: ", flavour
 
 
     #__________________________________________________________________________
@@ -4284,6 +4365,22 @@ class PlotAlg(pyframe.algs.CutFlowAlg,CutAlg):
             else:
                 cut_passed = self.apply_cut(cn) and cut_passed
         return cut_passed
+    
+    #______________________________________________________________    
+    def plot_CF(self):
+        
+        '''
+        
+        ### true charge-flip
+        if self.sampletype == "mc":
+          self.h_el_pt_eta_all  = self.hist2DVariable('h_el_pt_eta_all',  pt_bins, eta_bins, dir=ELECTRONS)
+          self.h_el_pt_eta_chf2 = self.hist2DVariable('h_el_pt_eta_chf2', pt_bins, eta_bins, dir=ELECTRONS)
+          self.h_el_pt_eta_chf4 = self.hist2DVariable('h_el_pt_eta_chf4', pt_bins, eta_bins, dir=ELECTRONS)
+
+        self.h_el_lead_pt_eta     = self.hist2DVariable('h_el_lead_pt_eta',  pt_bins, eta_bins, dir=ELECTRONS)
+        self.h_el_sublead_pt_eta  = self.hist2DVariable('h_el_sublead_pt_eta',  pt_bins, eta_bins, dir=ELECTRONS)
+        self.h_el_pt_eta          = self.hist2DVariable('h_el_pt_eta',  pt_bins, eta_bins, dir=ELECTRONS)
+        '''
     
     
 #__________________________________________________________________________
@@ -4299,5 +4396,7 @@ def log_bins_str(nbins,xmin,xmax):
     bins = log_bins(nbins,xmin,xmax)
     bins_str = "%d, array.array('f',%s)" % (len(bins)-1, str(bins))
     return bins_str 
+
+
 
 

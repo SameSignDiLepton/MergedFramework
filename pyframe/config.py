@@ -59,7 +59,7 @@ def main(analyze):
     # get config from the command-line
     if ops.events     : config["events"]     = int(ops.events)
     if ops.channel    : config["channel"]    = int(ops.channel)
-    if ops.tree       : config["tree"]       = ops.tree
+    if ops.tree       : config["tree"]       = ops.treefredagsfika
     if ops.version    : config["version"]    = ops.version
     if ops.proc       : config["proc"]       = int(ops.proc)
     if ops.samplename : config["samplename"] = ops.samplename

@@ -7,10 +7,91 @@ configuration. Do not create
 other config files !!!
 """
 
+# -------
+# Charge flip
+# -------
+
+h_electrons_chargeflip  = Hist1D( hname  = "h_electrons_chargeflip",
+                              xtitle = "????",
+                              ytitle = "Events", 
+                              nbins  = 72900,
+                              xmin   = 0,
+                              xmax   = 72900,
+                              dir    = "event",
+                              vexpr  = "self.store['CFtotBin']",
+                            )
+                            
+                            
+
 
 # -------
 # event
 # -------
+
+################    Tau event    ################################
+
+h_tau_mTVis  = Hist1D( hname  = "h_tau_mTVis",
+                              xtitle = "m_{vis}(tau_{lead},jet_{lead}, jet_{sublead}) [GeV]",
+                              ytitle = "Events / (1 GeV)", 
+                              nbins  = 150,
+                              xmin   = 0.0,
+                              xmax   = 300.,
+                              dir    = "event",
+                              vexpr  = "self.store['tau_mTVis']/GeV",
+                            )
+h_tau_mTtot  = Hist1D( hname  = "h_tau_mTtot",
+                              xtitle = "m_{vis}(tau_{lead},jet_{lead}, jet_{sublead}, met) [GeV]",
+                              ytitle = "Events / (1 GeV)", 
+                              nbins  = 150,
+                              xmin   = 0.0,
+                              xmax   = 300.,
+                              dir    = "event",
+                              vexpr  = "self.store['tau_mTtot']/GeV",
+                            )
+
+
+h_tau_chargeprod  = Hist1D( hname  = "h_tau_chargeprod",
+                              xtitle = "q(#tau_{lead}) #timesq (#tau_{sublead})",
+                              ytitle = "Events", 
+                              nbins  = 4,
+                              xmin   = -2,
+                              xmax   = 5,
+                              dir    = "event",
+                              vexpr  = "self.store['tau_charge_product']",
+                            )
+
+h_tau_dphi  = Hist1D( hname  = "h_tau_dphi",
+                              xtitle = "#Delta#phi(#tau_{lead},#tau_{sublead})",
+                              ytitle = "Events", 
+                              nbins  = 64,
+                              xmin   = -3.2,
+                              xmax   = 3.2,
+                              dir    = "event",
+                              vexpr  = "self.store['tau_dphi']",
+                            )
+                            
+h_tau_mCol  = Hist1D( hname  = "h_tau_mCol",
+                              xtitle = "m^{Col}_{T}(#tau_{lead},#tau_{sublead}) [GeV]",
+                              ytitle = "Events / (1 GeV)", 
+                              nbins  = 150,
+                              xmin   = 0.0,
+                              xmax   = 300.,
+                              dir    = "event",
+                              vexpr  = "self.store['tau_mCol']/GeV",
+                            )                            
+
+h_tau_deta  = Hist1D( hname  = "h_tau_deta",
+                              xtitle = "#Delta#eta(#tau_{lead},#tau_{sublead})",
+                              ytitle = "Events", 
+                              nbins  = 50,
+                              xmin   = -2.5,
+                              xmax   = 2.5,
+                              dir    = "event",
+                              vexpr  = "self.store['tau_deta']",
+                            ) 
+                            
+#********    General event   ************************'   
+                         
 h_averageIntPerXing = Hist1D( hname  = "h_averageIntPerXing",
                               xtitle = "averageInteractionsPerCrossing",
                               ytitle = "Events", 

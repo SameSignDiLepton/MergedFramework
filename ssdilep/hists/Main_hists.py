@@ -7,6 +7,7 @@ hist_list = []
 # -------
 # event
 # -------
+'''
 hist_list.append(h_averageIntPerXing)
 hist_list.append(h_actualIntPerXing)
 #hist_list.append(h_correct_mu)
@@ -19,11 +20,16 @@ hist_list.append(h_muons_dphi)
 hist_list.append(h_muons_deta)
 hist_list.append(h_muons_mVis)
 hist_list.append(h_muons_mTtot)
+'''
 hist_list.append(h_electrons_chargeprod)
 hist_list.append(h_electrons_dphi)
 hist_list.append(h_electrons_deta)
 hist_list.append(h_electrons_mVis)
 hist_list.append(h_electrons_mTtot)
+
+hist_list.append(h_electrons_chargeflip)
+
+'''
 hist_list.append(h_elemu_chargeprod)
 hist_list.append(h_elemu_dphi)
 hist_list.append(h_elemu_deta)
@@ -55,7 +61,7 @@ hist_list.append(h_musublead_trkz0)
 hist_list.append(h_musublead_trkz0sintheta)
 hist_list.append(h_musublead_ptvarcone30)
 
-
+'''
 # -------
 # electrons
 # -------
@@ -68,7 +74,7 @@ hist_list.append(h_elelead_trkd0)
 hist_list.append(h_elelead_trkd0sig)
 hist_list.append(h_elelead_trkz0)
 hist_list.append(h_elelead_trkz0sintheta)
-hist_list.append(h_elelead_ptvarcone30)
+#hist_list.append(h_elelead_ptvarcone30)
 
 # elesublead
 hist_list.append(h_elesublead_pt)
@@ -78,8 +84,8 @@ hist_list.append(h_elesublead_trkd0)
 hist_list.append(h_elesublead_trkd0sig)
 hist_list.append(h_elesublead_trkz0)
 hist_list.append(h_elesublead_trkz0sintheta)
-hist_list.append(h_elesublead_ptvarcone30)
-
+#hist_list.append(h_elesublead_ptvarcone30)
+'''
 # -------------
 # mixed channel
 # -------------
@@ -113,6 +119,6 @@ hist_list.append(h_met_trk_et)
 hist_list.append(h_met_trk_phi)
 hist_list.append(h_met_clus_sumet)
 hist_list.append(h_met_trk_sumet)
-
+'''
 
 # EOF

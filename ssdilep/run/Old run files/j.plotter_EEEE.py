@@ -193,12 +193,6 @@ def analyze(config):
     ## start preselection cutflow 
     ## ---------------------------------------
     loop += pyframe.algs.CutFlowAlg(key='presel')
-    
-    ## weights
-    ## +++++++++++++++++++++++++++++++++++++++
-    loop += ssdilep.algs.EvWeights.MCEventWeight(cutflow='presel',key='weight_mc_event')
-    loop += ssdilep.algs.EvWeights.LPXKfactor(cutflow='presel',key='weight_kfactor')
-    loop += ssdilep.algs.EvWeights.Pileup(cutflow='presel',key='weight_pileup')
 
     ## cuts
     ## +++++++++++++++++++++++++++++++++++++++

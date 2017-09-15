@@ -269,6 +269,8 @@ class SR2ChannelFlavour(pyframe.core.Algorithm):# Class for channel categorizati
         elif (len(electrons)==2 and len(muons)==2 and elecoupleSS and mucoupleSS and totalCharge==0): CF = 3
         elif (len(electrons)==3 and len(muons)==1 and totalCharge==0): CF = 4
         elif (len(electrons)==1 and len(muons)==3 and totalCharge==0): CF = 5
+        elif (len(electrons)==2 and len(muons)==0) : CF = 6
+        
         
         self.store["ChannelFlavour"]=CF
         
@@ -800,7 +802,183 @@ class DiEleVars(pyframe.core.Algorithm):
              self.store['ele%d'%i] = e
 
         return True
+        
+#------------------------------------------------------------------------------
+class ASDiEle_chargeflip_Vars(pyframe.core.Algorithm):
+    """
+    computes variables for any-sign di-electron selection
+    """
+    #__________________________________________________________________________
+    def __init__(self, 
+                 name      = 'ASDiEleVars',
+                 key_electrons = 'electrons_loose',
+                 key_met   = 'met_clus',
+                 ):
+        pyframe.core.Algorithm.__init__(self, name)
+        self.key_electrons = key_electrons
+        self.key_met   = key_met
 
+    #__________________________________________________________________________
+    def execute(self, weight):
+        pyframe.core.Algorithm.execute(self, weight)
+        """
+        computes variables and puts them in the store
+        """
+
+        ## get objects from event candidate
+        ## --------------------------------------------------
+        assert self.store.has_key(self.key_electrons), "electrons key: %s not found in store!" % (self.key_electrons)
+        electrons = self.store[self.key_electrons]
+        met = self.store[self.key_met]
+        
+        
+     
+        
+        # -----------------------
+        # Exactly two electrons
+        # -----------------------
+        
+        #Put leading and subleading electron in order
+         
+        if len(electrons)==2:
+          
+          if electrons[0].tlv.Pt() > electrons[0].tlv.Pt():
+                self.store['ele1'] = electrons[0]
+                self.store['ele2'] = electrons[1]
+          else: 
+                self.store['ele1'] = electrons[1]
+                self.store['ele2'] = electrons[0]
+               
+        
+        
+          ele1 = self.store['ele1'] 
+          ele2 = self.store['ele2'] 
+          ele1T = ROOT.TLorentzVector()
+          ele1T.SetPtEtaPhiM( ele1.tlv.Pt(), ele1.tlv.Eta(), ele1.tlv.Phi(), ele1.tlv.M() )
+          ele2T = ROOT.TLorentzVector()
+          ele2T.SetPtEtaPhiM( ele2.tlv.Pt(), ele2.tlv.Eta(), ele2.tlv.Phi(), ele2.tlv.M() )
+          
+          #********   Create charge flip variables    ************
+          
+          pt_bins  = [30., 34., 38., 43., 48., 55., 62., 69., 78.0, 88.0, 100., 115., 140., 200., 400.] 
+          eta_bins = [0.0, 0.45, 0.7, 0.9, 1.0, 1.1, 1.2, 1.37, 1.52, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5]
+          tot_bins = len(pt_bins)*len(pt_bins)*(len(eta_bins)-1)*(len(eta_bins)-1)
+          
+          self.store['pt_bins']= pt_bins
+          self.store['eta_bins']= eta_bins
+          self.store['tot_bins']= tot_bins
+          
+          ptbin1 = digitize( ele1.tlv.Pt()/GeV, pt_bins )
+          ptbin2 = digitize( ele2.tlv.Pt()/GeV, pt_bins )
+          
+          etabin1 = digitize( abs(ele1.caloCluster_eta), eta_bins )
+          etabin2 = digitize( abs(ele2.caloCluster_eta), eta_bins )
+          
+          assert ptbin1!=0 and ptbin2!=0 and etabin1!=0 and etabin2!=0 #"bins shouldn't be 0"
+          
+          # encode pt1, pt2, eta1, eta2 into 1D bins given pt_bins and eta_bins
+          CFtotBin = ( (ptbin1-1)*(len(eta_bins)-1) + etabin1-1 )*(len(eta_bins)-1)*len(pt_bins) + ( (ptbin2-1)*(len(eta_bins)-1) + etabin2 )
+          
+          #self.h_chargeFlipHist = self.hist('h_chargeFlipHist', "ROOT.TH1F('$', ';pt: "+str(len(pt_bins))+" eta: "+str(len(eta_bins)-1)+";Events',"+str(tot_bins)+",0,"+str(tot_bins)+")", dir=EVT)
+          
+          #********    Store all variables    ****************
+        
+          self.store['charge_product'] = ele2.trkcharge*ele1.trkcharge
+          self.store['mVis']           = (ele2.tlv+ele1.tlv).M()
+          self.store['mTtot']          = (ele1T + ele2T + met.tlv).M()  
+          self.store['electrons_dphi'] = ele2.tlv.DeltaPhi(ele1.tlv)
+          self.store['electrons_deta'] = ele2.tlv.Eta()-ele1.tlv.Eta()
+          
+          self.store['CFtotBin']			 = CFtotBin
+         
+        return True        
+
+
+class DiTauHadVars(pyframe.core.Algorithm):
+    """
+    Computes variables for the diTau_had selection
+    """
+    #__________________________________________________________________________
+    def __init__(self, 
+                 name      = 'DiTauHadVars',
+                 key_tau   = 'taus',
+                 key_met   = 'met_clus',
+                 ):
+        pyframe.core.Algorithm.__init__(self, name)
+        self.key_tau = key_tau
+        self.key_met   = key_met
+        
+
+    #__________________________________________________________________________
+    def execute(self, weight):
+        pyframe.core.Algorithm.execute(self, weight)
+        """
+        computes variables and puts them in the store
+        """
+
+        ## get objects from event candidate
+        ## --------------------------------------------------
+        assert self.store.has_key(self.key_tau), "tau key: %s not found in store!" % (self.key_tau)
+        taus = self.store[self.key_tau]
+        met = self.store[self.key_met]
+        
+                
+        # ------------------
+        # exactly two tau_had
+        # ------------------
+        
+        # dict containing pair 
+        # and significance
+         
+        if len(taus) == 2:
+        
+          if taus[0].tlv.Pt() > taus[0].tlv.Pt():
+                self.store['tau1'] = taus[0]
+                self.store['tau2'] = taus[1]
+          else: 
+                self.store['tau1'] = taus[1]
+                self.store['tau2'] = taus[0]
+          
+          
+          tau1T = ROOT.TLorentzVector()
+          tau1T.SetPtEtaPhiM( tau1.tlv.Pt(), tau1.tlv.Eta(), tau1.tlv.Phi(), tau1.tlv.M() )
+          
+          
+          tau2T = ROOT.TLorentzVector()
+          tau2T.SetPtEtaPhiM( tau2.tlv.Pt(), tau2.tlv.Eta(), tau2.tlv.Phi(), tau2.tlv.M() )
+          
+          self.store['tau_charge_product'] = tau2.charge*tau1.charge
+          self.store['tau_mTVis']          = (tau2.tlv+tau1.tlv).M()
+          self.store['tau_mTtot']          = (tau1T + tau2T + met.tlv).M()  
+          self.store['tau_dphi']           = tau2.tlv.DeltaPhi(tau1.tlv)
+          self.store['tau_deta']           = tau2.tlv.Eta()-tau1.tlv.Eta()
+          
+          self.store['tau_mCol']           = self.store['tau_mTVis'] / collinnear_approx_factor(met.tlv.Pt(), met.tlv.Phi(), tau1T.Pt(), tau1T.Phi(), tau2T.Pt(), tau2T.Phi())  
+          
+        return True
+    #__________________________________________________________________________
+    def collinnear_approx_factor(self, Pt_miss, Phi_miss, Pt_1, Phi_1, Pt_2, Phi_2): 
+        
+        #Return the factor of which a diTau event visible invariant mass should be divided by to give
+        # the mass as given by the collinear approximation. I.e  M_collinear)=M_Vis / collinear_approx_factor    
+        # Takes energy and angle of the missing energy and two particles.
+        
+        Pt_missy = Pt_miss * math.sin(Phi_miss)
+        Pt_missx = Pt_miss * math.cos(Phi_miss)
+        Pt_1y = Pt_1 * math.sin(Phi_1)
+        Pt_1x = Pt_1 * math.cos(Phi_1)
+        Pt_2y = Pt_2 * math.sin(Phi_2)
+        Pt_2x = Pt_2 * math.cos(Phi_2)
+         
+        r_1 = abs ( (Pt_missy * Pt_1x - Pt_missx * Pt_1y)  /  (Pt_1y * Pt_2x - Pt_1x * Pt_2y) )
+        r_2 = abs ( (Pt_missy * Pt_2x - Pt_missx * Pt_2y)  /  (Pt_1y * Pt_2x - Pt_1x * Pt_2y) )
+           
+        x_1 = 1.0 / (r_2 +1.0)
+        x_2 = 1.0 / (r_1 +1.0)
+        
+        collinear_approx_factor = math.sqrt(x_1 * x_2)
+        
+        return collinear_approx_factor      
 
 #------------------------------------------------------------------------------
 class EleMuVars(pyframe.core.Algorithm):
@@ -1286,7 +1464,17 @@ class MultiLeptonVars(pyframe.core.Algorithm):
           self.store['pairs_dR']       = (lep3.tlv+lep4.tlv).DeltaR(lep1.tlv+lep2.tlv)
         return True
 
-
+#__________________________________________________________________________
+#Used for the charge flip code to get the bins correct
+def digitize(value, binEdges):
+  assert isinstance(binEdges,list), "binEdges must be an array of bin edges"
+  if value < binEdges[0]: return 0
+  elif value >= binEdges[-1]: return len(binEdges)
+  for i in range(len(binEdges)):
+    edlow = binEdges[i]
+    edhigh = binEdges[i+1]
+    if value >= edlow and value < edhigh:
+      return i+1
 # EOF 
 
 
