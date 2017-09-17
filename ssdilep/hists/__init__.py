@@ -12,3 +12,5 @@ import H2D_hists
 import TAndP_hists
 import SR1Muons_hists
 import SRSkimmedVars_hists
+import EleCF_hists
+import TauCF_hists

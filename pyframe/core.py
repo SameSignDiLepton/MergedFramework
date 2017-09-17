@@ -106,6 +106,7 @@ class EventLoop(object):
         self.initialize()
         # do the event-loop
         log.debug("EventLoop.run execute-loop")
+        print (max_entry)
         if not self.quiet:
             progbar = progressbar.ProgressBar("black", width=20, block="=", empty=" ", min=min_entry, max=max_entry)
         progress_time = time.clock()

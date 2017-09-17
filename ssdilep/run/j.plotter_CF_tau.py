@@ -71,11 +71,11 @@ def analyze(config):
     ## build and pt-sort objects
     ## ---------------------------------------
     loop += pyframe.algs.ListBuilder(
-        prefixes = ['muon_','el_','jet_'],
-        keys = ['muons','electrons','jets'],
+        prefixes = ['muon_','el_','jet_','tau_'],
+        keys = ['muons','electrons','jets','taus'],
         )
     loop += pyframe.algs.AttachTLVs(
-        keys = ['muons','electrons','jets'],
+        keys = ['muons','electrons','jets','taus'],
         )
     # just a decoration of particles ...
     loop += ssdilep.algs.vars.ParticlesBuilder(
@@ -84,6 +84,10 @@ def analyze(config):
     loop += ssdilep.algs.vars.ParticlesBuilder(
         key='electrons',
         )
+    loop += ssdilep.algs.vars.ParticlesBuilder(
+        key='taus',
+        )
+        
     loop += ssdilep.algs.vars.BuildLooseElectrons(
         key_electrons='electrons',
         )
@@ -96,10 +100,6 @@ def analyze(config):
         prefix='metFinalClus',
         key = 'met_clus',
         )
-    loop += ssdilep.algs.met.METTRK(
-        prefix='metFinalTrk',
-        key = 'met_trk',
-        )
     
  
     ## start preselection cutflow 
@@ -110,23 +110,24 @@ def analyze(config):
     ## weights
     ## +++++++++++++++++++++++++++++++++++++++
     loop += ssdilep.algs.EvWeights.MCEventWeight(cutflow='presel',key='weight_mc_event')
-    loop += ssdilep.algs.EvWeights.LPXKfactor(cutflow='presel',key='weight_kfactor')
+    #loop += ssdilep.algs.EvWeights.LPXKfactor(cutflow='presel',key='weight_kfactor')
     loop += ssdilep.algs.EvWeights.Pileup(cutflow='presel',key='weight_pileup')
 
     ## cuts
     ## +++++++++++++++++++++++++++++++++++++++
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='BadJetVeto')
-    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='BJetVeto')    
-    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='TwoElectrons')
-    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='EleTT')
-    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='AllElePt30Simon')
+    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='BJetVeto')
+    
+    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='TauUnitCharge')
+    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='TwoTaus')
+    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='AllTausPt30')
     
 
     
     loop += ssdilep.algs.vars.SR2ChannelFlavour()
     ## initialize and/or decorate objects
     ## ---------------------------------------
-    loop += ssdilep.algs.vars.ASDiEle_chargeflip_Vars(key_electrons='electrons')   
+    loop += ssdilep.algs.vars.DiTau_chargeflip_Vars(key_electrons='taus')   
     
     ## configure histograms
     ## ---------------------------------------
@@ -136,7 +137,7 @@ def analyze(config):
     '''
     
     hist_list = []
-    hist_list += ssdilep.hists.EleCF_hists.hist_list
+    hist_list += ssdilep.hists.TauCF_hists.hist_list
     
     
 
@@ -150,7 +151,7 @@ def analyze(config):
             hist_list    = hist_list,
             cut_flow = [
                
-               ['ZMassWindowAS',None],
+               ['TauZMassWindowAS',None],
                ],
             )
             
@@ -160,8 +161,8 @@ def analyze(config):
              do_var_check = True,
              hist_list    = hist_list,
              cut_flow = [
-                ['TwoSSElectrons',None],
-                ['ZMassWindowSS',None],
+                ['TwoSSTaus',None],
+                ['TauZMassWindowSS',None],
                 ],
              )
              
@@ -172,7 +173,7 @@ def analyze(config):
              hist_list    = hist_list, 
              cut_flow = [
            
-                ['ZMassWindowASSideband',None],
+                ['TauZMassWindowASSideband',None],
                 ],
              )
 
@@ -182,10 +183,22 @@ def analyze(config):
              do_var_check = True,
              hist_list    = hist_list,
              cut_flow = [
-                ['TwoSSElectrons',None],
+                ['TwoSSTaus',None],
                 ['ZMassWindowSSSideband',None],
                 ],
-             )             
+             )
+             
+    loop += ssdilep.algs.algs.PlotAlg(
+             region   = 'Collinear test region',
+             plot_all = True,
+             do_var_check = True,
+             hist_list    = hist_list,
+             cut_flow = [
+                ['TwoOSTaus',None],
+                ['TaudPhiLessThan95Pi',None],                
+                ['TaudPhiLessThan90Pi',None],
+                ],
+             )              
    
 
     

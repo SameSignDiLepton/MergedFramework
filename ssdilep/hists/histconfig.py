@@ -21,6 +21,16 @@ h_electrons_chargeflip  = Hist1D( hname  = "h_electrons_chargeflip",
                               vexpr  = "self.store['CFtotBin']",
                             )
                             
+h_taus_chargeflip  = Hist1D( hname  = "h_taus_chargeflip",
+                              xtitle = "????",
+                              ytitle = "Events", 
+                              nbins  = 72900,
+                              xmin   = 0,
+                              xmax   = 72900,
+                              dir    = "event",
+                              vexpr  = "self.store['taus_CFtotBin']",
+                            )                            
+                            
                             
 
 
@@ -30,64 +40,64 @@ h_electrons_chargeflip  = Hist1D( hname  = "h_electrons_chargeflip",
 
 ################    Tau event    ################################
 
-h_tau_mTVis  = Hist1D( hname  = "h_tau_mTVis",
+h_taus_mTVis  = Hist1D( hname  = "h_taus_mTVis",
                               xtitle = "m_{vis}(tau_{lead},jet_{lead}, jet_{sublead}) [GeV]",
                               ytitle = "Events / (1 GeV)", 
                               nbins  = 150,
                               xmin   = 0.0,
                               xmax   = 300.,
                               dir    = "event",
-                              vexpr  = "self.store['tau_mTVis']/GeV",
+                              vexpr  = "self.store['taus_mTVis']/GeV",
                             )
-h_tau_mTtot  = Hist1D( hname  = "h_tau_mTtot",
+h_taus_mTtot  = Hist1D( hname  = "h_taus_mTtot",
                               xtitle = "m_{vis}(tau_{lead},jet_{lead}, jet_{sublead}, met) [GeV]",
                               ytitle = "Events / (1 GeV)", 
                               nbins  = 150,
                               xmin   = 0.0,
                               xmax   = 300.,
                               dir    = "event",
-                              vexpr  = "self.store['tau_mTtot']/GeV",
+                              vexpr  = "self.store['taus_mTtot']/GeV",
                             )
 
 
-h_tau_chargeprod  = Hist1D( hname  = "h_tau_chargeprod",
+h_taus_chargeprod  = Hist1D( hname  = "h_taus_chargeprod",
                               xtitle = "q(#tau_{lead}) #timesq (#tau_{sublead})",
                               ytitle = "Events", 
                               nbins  = 4,
                               xmin   = -2,
                               xmax   = 5,
                               dir    = "event",
-                              vexpr  = "self.store['tau_charge_product']",
+                              vexpr  = "self.store['taus_charge_product']",
                             )
 
-h_tau_dphi  = Hist1D( hname  = "h_tau_dphi",
+h_taus_dphi  = Hist1D( hname  = "h_taus_dphi",
                               xtitle = "#Delta#phi(#tau_{lead},#tau_{sublead})",
                               ytitle = "Events", 
                               nbins  = 64,
                               xmin   = -3.2,
                               xmax   = 3.2,
                               dir    = "event",
-                              vexpr  = "self.store['tau_dphi']",
+                              vexpr  = "self.store['taus_dphi']",
                             )
                             
-h_tau_mCol  = Hist1D( hname  = "h_tau_mCol",
+h_taus_mCol  = Hist1D( hname  = "h_taus_mCol",
                               xtitle = "m^{Col}_{T}(#tau_{lead},#tau_{sublead}) [GeV]",
                               ytitle = "Events / (1 GeV)", 
                               nbins  = 150,
                               xmin   = 0.0,
                               xmax   = 300.,
                               dir    = "event",
-                              vexpr  = "self.store['tau_mCol']/GeV",
+                              vexpr  = "self.store['taus_mCol']/GeV",
                             )                            
 
-h_tau_deta  = Hist1D( hname  = "h_tau_deta",
+h_taus_deta  = Hist1D( hname  = "h_taus_deta",
                               xtitle = "#Delta#eta(#tau_{lead},#tau_{sublead})",
                               ytitle = "Events", 
                               nbins  = 50,
                               xmin   = -2.5,
                               xmax   = 2.5,
                               dir    = "event",
-                              vexpr  = "self.store['tau_deta']",
+                              vexpr  = "self.store['taus_deta']",
                             ) 
                             
 #********    General event   ************************'   

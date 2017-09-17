@@ -66,29 +66,87 @@ class CutAlg(pyframe.core.Algorithm):
         
         
         ####################   TAU CUTS   ##################################
+  
+  
+    def cut_TauZMassWindowAS(self):
+        taus = self.store['taus']
+        mZ = 80*GeV #just tau stuff
+        if len(taus)==2 :
+          if abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 14.0*GeV:
+            return True;
+        return False
+
+    def cut_TauZMassWindowASSideband(self):
+        taus = self.store['taus']
+        mZ = 80*GeV
+        if len(taus)==2 :
+          if (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) > 14.0*GeV) and (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 28.0*GeV):
+            return True;
+        return False
+
+    def cut_TauZMassWindowSS(self):
+        taus = self.store['taus']
+        mZ = 80*GeV 
+        if len(taus)==2 :
+          if abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 15.8*GeV:
+            return True;
+        return False
+
+    def cut_TauZMassWindowSSSideband(self):
+        taus = self.store['taus']
+        mZ = 80*GeV 
+        if len(taus)==2 :
+          if (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) > 15.8*GeV) and (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 31.6*GeV):
+            return True;
+        return False   
     #__________________________________________________________________________
-    def cut_OSTauEle(self):
-      tau =self.store['taus']
-      ele = self.store['electrons_loose']	
-      
-      if len(tau) == 1 and len(ele) == 1:
-        if tau[0].charge * ele[0].trkcharge < 0.0:
-          return True
-      return False	
-    #__________________________________________________________________________
-    def cut_TwoOSTau(self):
+    def cut_TwoOSTaus(self):
       taus  = self.store['taus']
       if len(taus) == 2:
         if taus[0].charge * taus[1].charge < 0.0:
           return True
       return False
+    
+    def cut_TwoSSTaus(self):
+      taus  = self.store['taus']
+      if len(taus) == 2:
+        if taus[0].charge * taus[1].charge > 0.0:
+          return True
+      return False  
+ 
+    def cut_TwoTaus(self):
+      taus  = self.store['taus']
+      if len(taus) == 2: return True
+      return False      
+
+#__________________________________________________________________________
+      
+    def cut_OneProngedTau(self):
+      taus = self.store['taus']
+      if self.store['tau_ntrk'] == 1: return True
+      return False
+      
+    def cut_AllTausPt30(self):
+      taus = self.store['taus']
+      for t in taus:
+        if t.tlv.Pt() < 30*GeV: return False
+      return True    
+      
+    def cut_TauUnitCharge(self):
+      taus = self.store['taus']
+      for t in taus:
+        if abs(t.charge) != 1: return False
+      return True  
+      
+      
+      
     #__________________________________________________________________________
     def cut_TaudPhiLessThan95Pi(self):
-        if abs(self.store['tau_dphi'])  <= 0.95 * math.pi: return True
+        if abs(self.store['taus_dphi'])  <= 0.95 * math.pi: return True
         return False     
     #__________________________________________________________________________    
     def cut_TaudPhiLessThan90Pi(self):
-        if abs(self.store['tau_dphi'])  <= 0.90 * math.pi: return True
+        if abs(self.store['taus_dphi'])  <= 0.90 * math.pi: return True
         return False  
     #__________________________________________________________________________    
     def cut_noCut(self):
@@ -1766,7 +1824,7 @@ class CutAlg(pyframe.core.Algorithm):
       electrons = self.store['electrons']
       
       for m in electrons:
-      	if (m.tlv.Pt()>=30.0*GeV): return True
+      	if (m.tlv.Pt()>=30.0*GeV and m.trkd0sig<5.0 and abs(m.trkz0sintheta)<0.5): return True
       return False
       
     #__________________________________________________________________________

@@ -29,11 +29,12 @@ void charge_flip_measurement(){
 
 
   //****   Defining root file path    *******
-  //std::string file_path_data = "/afs/cern.ch/user/s/sarnling/MergedFramework/test/ntuple_data.root";
-  std::string file_path_data = "/afs/cern.ch/user/s/sarnling/MergedFramework/test/ntuple_data_exot19.root";
+  std::string file_path_data = "/afs/cern.ch/user/s/sarnling/MergedFramework/test/ntuple_data.root";
+  //std::string file_path_data = "/afs/cern.ch/user/s/sarnling/MergedFramework/test/ntuple_data_exot19.root";
   
   
-  std::string file_path_mc = "/afs/cern.ch/user/s/sarnling/MergedFramework/test/ntuple_mc.root";
+  std::string file_path_mc = "/afs/cern.ch/user/s/sarnling/MergedFramework/test/ntuple_mc.root";//
+  //std::string file_path_mc = "/afs/cern.ch/user/s/sarnling/MergedFramework/test/ntuple_mc_tau.root";
   
     
   std::string OSCenterInputFile = file_path_data;
@@ -95,10 +96,10 @@ void charge_flip_measurement(){
 
   std::cout << " Data charge-flip measurement " << std::endl;
   
-  NumericalMinimizer* NM1 = new NumericalMinimizer(hOSCenterData,hSSCenterData,hOSSidebandData,hSSSidebandData,1.1*1e6); //Here the actual likliehood minimization is done 
+  NumericalMinimizer* NM1 = new NumericalMinimizer(hOSCenterData,hSSCenterData,hOSSidebandData,hSSSidebandData,1e3); //Here the actual likliehood minimization is done 
   
   std::cout << " MC charge-flip measurement " << std::endl;
-  NumericalMinimizer* NM2 = new NumericalMinimizer(hOSCenterMC,hSSCenterMC,hOSSidebandMC,hSSSidebandMC,1.1*1e6);
+  NumericalMinimizer* NM2 = new NumericalMinimizer(hOSCenterMC,hSSCenterMC,hOSSidebandMC,hSSSidebandMC,1e6);
   
   
 //Clear the over and Underflow bins, as they should be empty  

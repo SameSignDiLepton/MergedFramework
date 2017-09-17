@@ -804,7 +804,7 @@ class DiEleVars(pyframe.core.Algorithm):
         return True
         
 #------------------------------------------------------------------------------
-class ASDiEle_chargeflip_Vars(pyframe.core.Algorithm):
+class DiEle_chargeflip_Vars(pyframe.core.Algorithm):
     """
     computes variables for any-sign di-electron selection
     """
@@ -891,7 +891,129 @@ class ASDiEle_chargeflip_Vars(pyframe.core.Algorithm):
           
           self.store['CFtotBin']			 = CFtotBin
          
-        return True        
+        return True
+        
+class DiTau_chargeflip_Vars(pyframe.core.Algorithm):
+    """
+    computes variables for di-tau CF selection
+    """
+    #__________________________________________________________________________
+    def __init__(self, 
+                 name      = 'ASDiEleVars',
+                 key_electrons = 'electrons',
+                 key_met   = 'met_clus',
+                 key_taus = 'taus'
+                 ):
+        pyframe.core.Algorithm.__init__(self, name)
+        self.key_electrons = key_electrons
+        self.key_met   = key_met
+        self.key_taus = key_taus
+
+    #__________________________________________________________________________
+    def execute(self, weight):
+        pyframe.core.Algorithm.execute(self, weight)
+        """
+        computes variables and puts them in the store
+        """
+
+        ## get objects from event candidate
+        ## --------------------------------------------------
+        assert self.store.has_key(self.key_taus), "Taus key: %s not found in store!" % (self.key_electrons)
+        taus = self.store[self.key_taus]
+        met = self.store[self.key_met]
+        
+        
+     
+        
+        # -----------------------
+        # Exactly two electrons
+        # -----------------------
+        
+        #Put leading and subleading electron in order
+         
+        if len(taus)==2:
+          
+          if taus[0].tlv.Pt() > taus[0].tlv.Pt():
+                self.store['tau1'] = taus[0]
+                self.store['tau2'] = taus[1]
+          else: 
+                self.store['tau1'] = taus[1]
+                self.store['tau2'] = taus[0]
+               
+        
+        
+          tau1 = self.store['tau1'] 
+          tau2 = self.store['tau2'] 
+          tau1T = ROOT.TLorentzVector()
+          tau1T.SetPtEtaPhiM( tau1.tlv.Pt(), tau1.tlv.Eta(), tau1.tlv.Phi(), tau1.tlv.M() )
+          tau2T = ROOT.TLorentzVector()
+          tau2T.SetPtEtaPhiM( tau2.tlv.Pt(), tau2.tlv.Eta(), tau2.tlv.Phi(), tau2.tlv.M() )
+          
+          #********   Create charge flip variables    ************
+          
+          pt_bins  = [30., 34., 38., 43., 48., 55., 62., 69., 78.0, 88.0, 100., 115., 140., 200., 400.] 
+          eta_bins = [0.0, 0.45, 0.7, 0.9, 1.0, 1.1, 1.2, 1.37, 1.52, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5]
+          tot_bins = len(pt_bins)*len(pt_bins)*(len(eta_bins)-1)*(len(eta_bins)-1)
+          
+          self.store['pt_bins']= pt_bins
+          self.store['eta_bins']= eta_bins
+          self.store['tot_bins']= tot_bins
+          
+         
+          ptbin1 = digitize( tau1.tlv.Pt()/GeV, pt_bins )
+        
+          ptbin2 = digitize( tau2.tlv.Pt()/GeV, pt_bins )
+          
+          etabin1 = digitize( abs(tau1.tlv.Eta()), eta_bins )
+          etabin2 = digitize( abs(tau2.tlv.Eta()), eta_bins )
+          
+          assert ptbin1!=0 
+          assert ptbin2!=0 
+          assert etabin1!=0 
+          assert etabin2!=0 #"bins shouldn't be 0"
+          
+          # encode pt1, pt2, eta1, eta2 into 1D bins given pt_bins and eta_bins
+          CFtotBin = ( (ptbin1-1)*(len(eta_bins)-1) + etabin1-1 )*(len(eta_bins)-1)*len(pt_bins) + ( (ptbin2-1)*(len(eta_bins)-1) + etabin2 )
+          
+          #self.h_chargeFlipHist = self.hist('h_chargeFlipHist', "ROOT.TH1F('$', ';pt: "+str(len(pt_bins))+" eta: "+str(len(eta_bins)-1)+";Events',"+str(tot_bins)+",0,"+str(tot_bins)+")", dir=EVT)
+          
+          #********    Store all variables    ****************
+        
+          self.store['taus_charge_product'] = tau2.charge*tau1.charge
+          self.store['taus_mTVis']           = (tau2.tlv+tau1.tlv).M()
+          self.store['taus_mTtot']          = (tau1T + tau2T + met.tlv).M()  
+          self.store['taus_dphi'] = tau2.tlv.DeltaPhi(tau1.tlv)
+          self.store['taus_deta'] = tau2.tlv.Eta()-tau1.tlv.Eta()
+          self.store['taus_mCol']           = self.store['taus_mTVis'] / self.collinnear_approx_factor(met.tlv.Pt(), met.tlv.Phi(), tau1T.Pt(), tau1T.Phi(), tau2T.Pt(), tau2T.Phi())  
+          
+          self.store['taus_CFtotBin']			 = CFtotBin
+         
+        return True 
+        
+        
+        
+    def collinnear_approx_factor(self, Pt_miss, Phi_miss, Pt_1, Phi_1, Pt_2, Phi_2): 
+        
+        #Return the factor of which a diTau event visible invariant mass should be divided by to give
+        # the mass as given by the collinear approximation. I.e  M_collinear)=M_Vis / collinear_approx_factor    
+        # Takes energy and angle of the missing energy and two particles.
+        
+        Pt_missy = Pt_miss * math.sin(Phi_miss)
+        Pt_missx = Pt_miss * math.cos(Phi_miss)
+        Pt_1y = Pt_1 * math.sin(Phi_1)
+        Pt_1x = Pt_1 * math.cos(Phi_1)
+        Pt_2y = Pt_2 * math.sin(Phi_2)
+        Pt_2x = Pt_2 * math.cos(Phi_2)
+         
+        r_1 = abs ( (Pt_missy * Pt_1x - Pt_missx * Pt_1y)  /  (Pt_1y * Pt_2x - Pt_1x * Pt_2y) )
+        r_2 = abs ( (Pt_missy * Pt_2x - Pt_missx * Pt_2y)  /  (Pt_1y * Pt_2x - Pt_1x * Pt_2y) )
+           
+        x_1 = 1.0 / (r_2 +1.0)
+        x_2 = 1.0 / (r_1 +1.0)
+        
+        factor = math.sqrt(x_1 * x_2)
+        
+        return factor                        
 
 
 class DiTauHadVars(pyframe.core.Algorithm):
