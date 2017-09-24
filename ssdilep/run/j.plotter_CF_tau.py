@@ -109,7 +109,7 @@ def analyze(config):
     
     ## weights
     ## +++++++++++++++++++++++++++++++++++++++
-    loop += ssdilep.algs.EvWeights.MCEventWeight(cutflow='presel',key='weight_mc_event')
+    #loop += ssdilep.algs.EvWeights.MCEventWeight(cutflow='presel',key='weight_mc_event')
     #loop += ssdilep.algs.EvWeights.LPXKfactor(cutflow='presel',key='weight_kfactor')
     loop += ssdilep.algs.EvWeights.Pileup(cutflow='presel',key='weight_pileup')
 
@@ -117,17 +117,16 @@ def analyze(config):
     ## +++++++++++++++++++++++++++++++++++++++
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='BadJetVeto')
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='BJetVeto')
-    
-    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='TauUnitCharge')
     loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='TwoTaus')
-    loop += ssdilep.algs.algs.CutAlg(cutflow='presel',cut='AllTausPt30')
     
 
     
     loop += ssdilep.algs.vars.SR2ChannelFlavour()
     ## initialize and/or decorate objects
     ## ---------------------------------------
-    loop += ssdilep.algs.vars.DiTau_chargeflip_Vars(key_electrons='taus')   
+    loop += ssdilep.algs.vars.DiTau_chargeflip_Vars(key_taus='taus')
+    loop += ssdilep.algs.vars.DiTauHadVars (key_taus='taus') 
+     
     
     ## configure histograms
     ## ---------------------------------------
@@ -138,67 +137,151 @@ def analyze(config):
     
     hist_list = []
     hist_list += ssdilep.hists.TauCF_hists.hist_list
+    hist_list += ssdilep.hists.Tau_hists.hist_list
     
     
 
-    ## MyTestRegion
+    ##     One-pronged CF plots
     ## ---------------------------------------
+    
+    loop += ssdilep.algs.algs.PlotAlg(
+            region   = 'ZWindowAS-OnePronged',
+            plot_all = True,
+            do_var_check = True,
+            hist_list    = hist_list,
+            cut_flow = [
+               ['TauZMassWindowAS',None],
+               ['OneProngedTaus', None],
+                              ],
+            )
+            
+          
+            
+    loop += ssdilep.algs.algs.PlotAlg(
+             region   = 'ZWindowSS-Onepronged',
+             plot_all = True,
+             do_var_check = True,
+             hist_list    = hist_list,
+             cut_flow = [
+                ['TwoSSTaus',None],
+                ['TauZMassWindowSS',None],
+                ['OneProngedTaus', None],
+                ],
+             )
+                     
+             
+    loop += ssdilep.algs.algs.PlotAlg(
+             region   = 'ZWindowAS-Sideband-OnePronged',
+             plot_all = True,
+             do_var_check = True,
+             hist_list    = hist_list, 
+             cut_flow = [           
+                ['TauZMassWindowASSideband',None],
+                ['OneProngedTaus', None],
+                ],
+             )
 
     loop += ssdilep.algs.algs.PlotAlg(
-            region   = 'ZWindowAS',
+             region   = 'ZWindowSS-Sideband-OnePronged',
+             plot_all = True,
+             do_var_check = True,
+             hist_list    = hist_list,
+             cut_flow = [
+                ['TwoSSTaus',None],
+                ['TauZMassWindowSSSideband',None],
+                ['OneProngedTaus', None],
+                ],
+             )
+             
+    ##     Three-pronged CF plots
+    ## ---------------------------------------
+    loop += ssdilep.algs.algs.PlotAlg(
+            region   = 'ZWindowAS-ThreePronged',
             plot_all = False,
             do_var_check = True,
             hist_list    = hist_list,
             cut_flow = [
-               
                ['TauZMassWindowAS',None],
-               ],
+               ['ThreeProngedTaus', None],
+                              ],
             )
             
+          
+            
     loop += ssdilep.algs.algs.PlotAlg(
-             region   = 'ZWindowSS',
+             region   = 'ZWindowSS-Threepronged',
              plot_all = False,
              do_var_check = True,
              hist_list    = hist_list,
              cut_flow = [
                 ['TwoSSTaus',None],
                 ['TauZMassWindowSS',None],
+                ['ThreeProngedTaus', None],
                 ],
              )
+                     
              
     loop += ssdilep.algs.algs.PlotAlg(
-             region   = 'ZWindowAS-Sideband',
+             region   = 'ZWindowAS-Sideband-ThreePronged',
              plot_all = False,
              do_var_check = True,
              hist_list    = hist_list, 
-             cut_flow = [
-           
+             cut_flow = [           
                 ['TauZMassWindowASSideband',None],
+                ['ThreeProngedTaus', None],
                 ],
              )
 
     loop += ssdilep.algs.algs.PlotAlg(
-             region   = 'ZWindowSS-Sideband',
+             region   = 'ZWindowSS-Sideband-ThreePronged',
              plot_all = False,
              do_var_check = True,
              hist_list    = hist_list,
              cut_flow = [
                 ['TwoSSTaus',None],
-                ['ZMassWindowSSSideband',None],
+                ['TauZMassWindowSSSideband',None],
+                ['ThreeProngedTaus', None],
                 ],
-             )
-             
+             )         
+    
+    
+    #___________    AS and SS invariant mass plots   ___________________
+    loop += ssdilep.algs.algs.PlotAlg(
+            region   = 'ZtautauAS',
+            plot_all = False,
+            do_var_check = True,
+            hist_list    = ssdilep.hists.Tau_hists.hist_list,
+            cut_flow = [               
+               ['TwoTaus',None],
+               ],
+            )  
+            
+            
+    loop += ssdilep.algs.algs.PlotAlg(
+             region   = 'ZtautauSS',
+             plot_all = False,
+             do_var_check = True,
+             hist_list    = ssdilep.hists.Tau_hists.hist_list,
+             cut_flow = [
+                ['TwoSSTaus',None],
+                                ],
+             )             
+    
+    
+    #___________    Collinear approximtion cuts   ___________________
+          
     loop += ssdilep.algs.algs.PlotAlg(
              region   = 'Collinear test region',
              plot_all = True,
              do_var_check = True,
-             hist_list    = hist_list,
+             hist_list    = ssdilep.hists.Tau_hists.hist_list,
              cut_flow = [
                 ['TwoOSTaus',None],
                 ['TaudPhiLessThan95Pi',None],                
                 ['TaudPhiLessThan90Pi',None],
                 ],
              )              
+   
    
 
     

@@ -418,7 +418,7 @@ WtaunuPowheg = Sample( name =   'WtaunuPowheg',
                               ],
                 ) 
 """
-"""
+
 #-------------------------------------------------------------------------------------------------------
 # Z + jets (Powheg)
 # Notes:
@@ -426,11 +426,11 @@ WtaunuPowheg = Sample( name =   'WtaunuPowheg',
 #                         
 #-------------------------------------------------------------------------------------------------------
 
-ZeePP       = Sample( name  = "PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee",     xsec = , feff =  ) 
-ZmumuPP     = Sample( name  = "PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zmumu",   xsec = , feff =  ) 
-ZtautauPP   = Sample( name  = "PowhegPythia8EvtGen_AZNLOCTEQ6L1_Ztautau", xsec = , feff =  ) 
+#ZeePP       = Sample( name  = "PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee",     xsec = 0, feff = 0 ) 
+#ZmumuPP     = Sample( name  = "PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zmumu",   xsec = 0, feff = 0) 
+ZtautauPP   = Sample( name  = "PowhegPythia8EvtGen_AZNLOCTEQ6L1_Ztautau", xsec = 1901.1 , feff = 1.0 ) 
 
-
+'''
 ZeePowheg       = Sample( name         = "ZeePowheg",     
                           tlatex       = 'Z #rightarrow ee+jets',
                           fill_color   =  ROOT.kOrange+1,
@@ -451,7 +451,7 @@ ZmumuPowheg     = Sample( name         = "ZmumuPowheg",
                                ZmumuPP,     
                               ],
                   ) 
-
+'''
 
 ZtautauPowheg   = Sample( name         = "ZtautauPowheg", 
                           tlatex       = 'Z #rightarrow #tau#tau+jets',
@@ -462,7 +462,7 @@ ZtautauPowheg   = Sample( name         = "ZtautauPowheg",
                                ZtautauPP,     
                               ],
                   ) 
-"""
+
 
 
 #-------------------------------------------------------------------------------------------------------------------------

@@ -11,26 +11,30 @@
 #include "TH2.h"
 #include "TLegend.h"
 #include "TText.h"
+#include "TRandom1.h"
 
 #include "./NumericalMinimizer.h"
 
 #include <iostream>
 
 
-NumericalMinimizer::NumericalMinimizer (TH1F* hOSCenter, TH1F* hSSCenter, TH1F* hOSSideband, TH1F* hSSSideband, double aa):
+NumericalMinimizer::NumericalMinimizer (TH1F* hOSCenter, TH1F* hSSCenter, TH1F* hOSSideband, TH1F* hSSSideband, double aa, double etaBins[], double ptBins[], int NetaBins, int NptBins):
 m_hOSCenter(hOSCenter),
 m_hSSCenter(hSSCenter),
 m_hOSSideband(hOSSideband),
 m_hSSSideband(hSSSideband),
-m_constraint(aa)
+m_constraint(aa),
+m_etaBins(etaBins),
+m_ptBins(ptBins),
+m_NetaBins(NetaBins),
+m_NptBins(NptBins)
 {
   
-  //std::string xTitle = std::string( m_hOSCenter->GetXaxis()->GetTitle() );
-  //std::stringstream ss(xTitle);
-  //std::string tempStr;
-  //ss >> tempStr >> m_NptBins >> tempStr >> m_NetaBins;
+  m_etaBins = etaBins;
+  m_ptBins = ptBins;
   
   std::cout << "NetaBins: " << m_NetaBins << " NptBins: " << m_NptBins << std::endl;
+  cout << m_hOSCenter->GetNbinsX() << endl;
   if(m_hOSCenter->GetNbinsX()!=m_NetaBins*m_NetaBins*m_NptBins*m_NptBins){
     std::cout << "error: bins don't match" << std::endl;
   }
@@ -111,12 +115,16 @@ double NumericalMinimizer::LogLikelihood1D(const double *xx )
 double NumericalMinimizer::LogLikelihood1Dfull(const double *xx )
 {
   double value = 0;
+  
   for(int pt1 = 1; pt1 <= m_NptBins; pt1++) {
     for(int eta1 = 1; eta1 <= m_NetaBins; eta1++) {
       for(int pt2 = 1; pt2 <= m_NptBins; pt2++) {
         for(int eta2 = 1; eta2 <= m_NetaBins; eta2++){
           // totBin = ( (ptbin1-1)*(len(eta_bins)-1) + etabin1-1 )*(len(eta_bins)-1)*len(pt_bins) + ( (ptbin2-1)*(len(eta_bins)-1) + etabin2 )
           int totBin = ( (pt1-1)*m_NetaBins + eta1 - 1 )*m_NptBins*m_NetaBins + ( (pt2-1)*m_NetaBins + eta2 ) + 1;
+          //if (m_hSSCenter->GetBinContent(totBin) < 0) m_hSSCenter->SetBinContent(totBin, 0);
+          //if (m_hOSCenter->GetBinContent(totBin) < 0) m_hOSCenter->SetBinContent(totBin, 0);
+          
           value += -m_hSSCenter->GetBinContent(totBin) * log( xx[eta1-1]*xx[m_NetaBins+pt1-1]*(1-xx[eta2-1]*xx[m_NetaBins+pt2-1]) + 
                                                               xx[eta2-1]*xx[m_NetaBins+pt2-1]*(1-xx[eta1-1]*xx[m_NetaBins+pt1-1]) ) 
           + m_hOSCenter->GetBinContent(totBin)*( xx[eta1-1]*xx[m_NetaBins+pt1-1]*(1-xx[eta2-1]*xx[m_NetaBins+pt2-1]) + 
@@ -145,10 +153,11 @@ ROOT::Math::Minimizer* NumericalMinimizer::NumericalMinimization1D(const char * 
 {
  ROOT::Math::Minimizer* min = ROOT::Math::Factory::CreateMinimizer(minName, algoName);
 
-   min->SetMaxFunctionCalls(1e9); // for Minuit/Minuit2
+   min->SetMaxFunctionCalls(5e4); // for Minuit/Minuit2
    min->SetMaxIterations(1e9);  // for GSL
-   min->SetTolerance(1e-6);
-   min->SetPrintLevel(1);
+   min->SetTolerance(1e-9);
+   min->SetPrintLevel(2);
+   min->SetStrategy(2);
 
    auto func = &NumericalMinimizer::LogLikelihood1Dfull;
    ROOT::Math::Functor f(this,func,m_NetaBins+m_NptBins);

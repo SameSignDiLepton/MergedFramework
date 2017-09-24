@@ -812,7 +812,7 @@ class DiEle_chargeflip_Vars(pyframe.core.Algorithm):
     def __init__(self, 
                  name      = 'ASDiEleVars',
                  key_electrons = 'electrons_loose',
-                 key_met   = 'met_clus',
+                 key_met   = 'met_trk',
                  ):
         pyframe.core.Algorithm.__init__(self, name)
         self.key_electrons = key_electrons
@@ -926,7 +926,7 @@ class DiTau_chargeflip_Vars(pyframe.core.Algorithm):
      
         
         # -----------------------
-        # Exactly two electrons
+        # Exactly two tau
         # -----------------------
         
         #Put leading and subleading electron in order
@@ -951,40 +951,38 @@ class DiTau_chargeflip_Vars(pyframe.core.Algorithm):
           
           #********   Create charge flip variables    ************
           
-          pt_bins  = [30., 34., 38., 43., 48., 55., 62., 69., 78.0, 88.0, 100., 115., 140., 200., 400.] 
-          eta_bins = [0.0, 0.45, 0.7, 0.9, 1.0, 1.1, 1.2, 1.37, 1.52, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5]
+          #pt_bins  = [20., 34., 38., 43., 48., 55., 62., 69., 78.0, 88.0, 100., 115., 140., 200.] 
+          #eta_bins = [0.0, 0.45, 0.7, 0.9, 1.0, 1.1, 1.2, 1.37, 1.52, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5]
+          #pt_bins  = [20., 25., 35, 80.] 
+          #eta_bins = [0.0, 0.4, 0.8, 1.37, 1.52, 2.5]
+          pt_bins  = [20., 50.] 
+          eta_bins = [0.0, 0.5, 1.37, 1.52, 2.5]
           tot_bins = len(pt_bins)*len(pt_bins)*(len(eta_bins)-1)*(len(eta_bins)-1)
           
           self.store['pt_bins']= pt_bins
           self.store['eta_bins']= eta_bins
           self.store['tot_bins']= tot_bins
-          
-         
+                   
           ptbin1 = digitize( tau1.tlv.Pt()/GeV, pt_bins )
-        
           ptbin2 = digitize( tau2.tlv.Pt()/GeV, pt_bins )
           
           etabin1 = digitize( abs(tau1.tlv.Eta()), eta_bins )
           etabin2 = digitize( abs(tau2.tlv.Eta()), eta_bins )
           
+          #"bins shouldn't be 0"
           assert ptbin1!=0 
           assert ptbin2!=0 
           assert etabin1!=0 
-          assert etabin2!=0 #"bins shouldn't be 0"
+          assert etabin2!=0 
           
           # encode pt1, pt2, eta1, eta2 into 1D bins given pt_bins and eta_bins
           CFtotBin = ( (ptbin1-1)*(len(eta_bins)-1) + etabin1-1 )*(len(eta_bins)-1)*len(pt_bins) + ( (ptbin2-1)*(len(eta_bins)-1) + etabin2 )
           
-          #self.h_chargeFlipHist = self.hist('h_chargeFlipHist', "ROOT.TH1F('$', ';pt: "+str(len(pt_bins))+" eta: "+str(len(eta_bins)-1)+";Events',"+str(tot_bins)+",0,"+str(tot_bins)+")", dir=EVT)
-          
+                  
           #********    Store all variables    ****************
-        
-          self.store['taus_charge_product'] = tau2.charge*tau1.charge
-          self.store['taus_mTVis']           = (tau2.tlv+tau1.tlv).M()
-          self.store['taus_mTtot']          = (tau1T + tau2T + met.tlv).M()  
-          self.store['taus_dphi'] = tau2.tlv.DeltaPhi(tau1.tlv)
-          self.store['taus_deta'] = tau2.tlv.Eta()-tau1.tlv.Eta()
-          self.store['taus_mCol']           = self.store['taus_mTVis'] / self.collinnear_approx_factor(met.tlv.Pt(), met.tlv.Phi(), tau1T.Pt(), tau1T.Phi(), tau2T.Pt(), tau2T.Phi())  
+         
+         #self.h_chargeFlipHist = self.hist('h_chargeFlipHist', "ROOT.TH1F('$', ';pt: "+str(len(pt_bins))+" eta: "+str(len(eta_bins)-1)+";Events',"+str(tot_bins)+",0,"+str(tot_bins)+")", dir=EVT)
+         
           
           self.store['taus_CFtotBin']			 = CFtotBin
          
@@ -1023,11 +1021,11 @@ class DiTauHadVars(pyframe.core.Algorithm):
     #__________________________________________________________________________
     def __init__(self, 
                  name      = 'DiTauHadVars',
-                 key_tau   = 'taus',
+                 key_taus   = 'taus',
                  key_met   = 'met_clus',
                  ):
         pyframe.core.Algorithm.__init__(self, name)
-        self.key_tau = key_tau
+        self.key_taus = key_taus
         self.key_met   = key_met
         
 
@@ -1040,8 +1038,8 @@ class DiTauHadVars(pyframe.core.Algorithm):
 
         ## get objects from event candidate
         ## --------------------------------------------------
-        assert self.store.has_key(self.key_tau), "tau key: %s not found in store!" % (self.key_tau)
-        taus = self.store[self.key_tau]
+        assert self.store.has_key(self.key_taus), "tau key: %s not found in store!" % (self.key_taus)
+        taus = self.store[self.key_taus]
         met = self.store[self.key_met]
         
                 
@@ -1060,6 +1058,9 @@ class DiTauHadVars(pyframe.core.Algorithm):
           else: 
                 self.store['tau1'] = taus[1]
                 self.store['tau2'] = taus[0]
+                
+          tau1 = self.store['tau1'] 
+          tau2 = self.store['tau2'] 
           
           
           tau1T = ROOT.TLorentzVector()
@@ -1069,13 +1070,13 @@ class DiTauHadVars(pyframe.core.Algorithm):
           tau2T = ROOT.TLorentzVector()
           tau2T.SetPtEtaPhiM( tau2.tlv.Pt(), tau2.tlv.Eta(), tau2.tlv.Phi(), tau2.tlv.M() )
           
-          self.store['tau_charge_product'] = tau2.charge*tau1.charge
-          self.store['tau_mTVis']          = (tau2.tlv+tau1.tlv).M()
-          self.store['tau_mTtot']          = (tau1T + tau2T + met.tlv).M()  
-          self.store['tau_dphi']           = tau2.tlv.DeltaPhi(tau1.tlv)
-          self.store['tau_deta']           = tau2.tlv.Eta()-tau1.tlv.Eta()
+          self.store['taus_charge_product'] = tau2.charge*tau1.charge
+          self.store['taus_mTVis']          = (tau2.tlv+tau1.tlv).M()
+          self.store['taus_mTtot']          = (tau1T + tau2T + met.tlv).M()  
+          self.store['taus_dphi']           = tau2.tlv.DeltaPhi(tau1.tlv)
+          self.store['taus_deta']           = tau2.tlv.Eta()-tau1.tlv.Eta()
           
-          self.store['tau_mCol']           = self.store['tau_mTVis'] / collinnear_approx_factor(met.tlv.Pt(), met.tlv.Phi(), tau1T.Pt(), tau1T.Phi(), tau2T.Pt(), tau2T.Phi())  
+          self.store['taus_mCol']           = self.store['taus_mTVis'] / self.collinnear_approx_factor(met.tlv.Pt(), met.tlv.Phi(), tau1T.Pt(), tau1T.Phi(), tau2T.Pt(), tau2T.Phi())  
           
         return True
     #__________________________________________________________________________
@@ -1098,9 +1099,9 @@ class DiTauHadVars(pyframe.core.Algorithm):
         x_1 = 1.0 / (r_2 +1.0)
         x_2 = 1.0 / (r_1 +1.0)
         
-        collinear_approx_factor = math.sqrt(x_1 * x_2)
+        factor = math.sqrt(x_1 * x_2)
         
-        return collinear_approx_factor      
+        return factor      
 
 #------------------------------------------------------------------------------
 class EleMuVars(pyframe.core.Algorithm):

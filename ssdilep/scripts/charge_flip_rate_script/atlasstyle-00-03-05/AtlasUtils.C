@@ -270,7 +270,7 @@ TGraphErrors* TH1TOTGraph(TH1 *h1){
 
 void myText(Double_t x,Double_t y,Color_t color, const char *text) {
 
-  Double_t tsize=0.05;
+  Double_t tsize=0.04;
   TLatex l; l.SetTextAlign(12); l.SetTextSize(tsize); 
   l.SetNDC();
   l.SetTextColor(color);

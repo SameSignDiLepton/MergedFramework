@@ -26,7 +26,7 @@ JOBNAME = "testGiulia4"
 DO_NTUP_SYS = False                  # submit the NTUP systematics jobs
 TESTMODE = False                     # submit only 1 sub-job (for testing)
 
-DO_NOM = False                        # submit the nominal job
+DO_NOM = False #true                       # submit the nominal job
 
 DO_PLOT_SYS = True                  # submit the plot systematics jobs
 
@@ -236,7 +236,7 @@ def submit(tag,job_sys,samps,config={}):
 
   sample_list = ""
   #sample_file = 'filelists/v3ntuples_fullSys.txt'
-  sample_file = 'filelists/testList.txt'
+  sample_file = 'filelists/testList.txt' #list of input files
   with open(sample_file, 'r') as f:
     sample_list = f.read()
   f.closed

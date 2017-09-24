@@ -66,40 +66,45 @@ class CutAlg(pyframe.core.Algorithm):
         
         
         ####################   TAU CUTS   ##################################
+        
+        
+        
+    #__________    Mass windows     _____________________    
   
   
     def cut_TauZMassWindowAS(self):
         taus = self.store['taus']
-        mZ = 80*GeV #just tau stuff
+        mZ = 70*GeV #just tau stuff
         if len(taus)==2 :
-          if abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 14.0*GeV:
+          if abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 30.0*GeV:
             return True;
         return False
 
     def cut_TauZMassWindowASSideband(self):
         taus = self.store['taus']
-        mZ = 80*GeV
+        mZ = 70*GeV
         if len(taus)==2 :
-          if (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) > 14.0*GeV) and (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 28.0*GeV):
+          if (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) > 30.0*GeV) and (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 60.0*GeV):
             return True;
         return False
 
     def cut_TauZMassWindowSS(self):
         taus = self.store['taus']
-        mZ = 80*GeV 
+        mZ = 70*GeV 
         if len(taus)==2 :
-          if abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 15.8*GeV:
+          if abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 30*GeV:
             return True;
         return False
 
     def cut_TauZMassWindowSSSideband(self):
         taus = self.store['taus']
-        mZ = 80*GeV 
+        mZ = 70*GeV 
         if len(taus)==2 :
-          if (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) > 15.8*GeV) and (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 31.6*GeV):
+          if (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) > 30*GeV) and (abs( (taus[0].tlv + taus[1].tlv).M() - mZ) < 60*GeV):
             return True;
         return False   
-    #__________________________________________________________________________
+    #______________    Ditau cuts    ____________________________________________________________
+    
     def cut_TwoOSTaus(self):
       taus  = self.store['taus']
       if len(taus) == 2:
@@ -119,36 +124,40 @@ class CutAlg(pyframe.core.Algorithm):
       if len(taus) == 2: return True
       return False      
 
-#__________________________________________________________________________
+#___________    Random cuts    _______________________________________________________________
       
-    def cut_OneProngedTau(self):
+    def cut_OneProngedTaus(self):
       taus = self.store['taus']
-      if self.store['tau_ntrk'] == 1: return True
-      return False
+      for t in taus:
+      	if (t.ntrk != 1): return False
+      return True	
       
+    def cut_ThreeProngedTaus(self):
+      taus = self.store['taus']
+      for t in taus:
+      	if (t.ntrk != 3): return False
+      return True	  
+      
+         
     def cut_AllTausPt30(self):
       taus = self.store['taus']
       for t in taus:
         if t.tlv.Pt() < 30*GeV: return False
       return True    
       
-    def cut_TauUnitCharge(self):
-      taus = self.store['taus']
-      for t in taus:
-        if abs(t.charge) != 1: return False
-      return True  
+     
       
       
-      
-    #__________________________________________________________________________
+    #________    Collinear approximation cuts    _____________________________
+    
     def cut_TaudPhiLessThan95Pi(self):
         if abs(self.store['taus_dphi'])  <= 0.95 * math.pi: return True
         return False     
-    #__________________________________________________________________________    
+         
     def cut_TaudPhiLessThan90Pi(self):
         if abs(self.store['taus_dphi'])  <= 0.90 * math.pi: return True
         return False  
-    #__________________________________________________________________________    
+        
     def cut_noCut(self):
         return True
         

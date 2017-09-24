@@ -14,3 +14,4 @@ import SR1Muons_hists
 import SRSkimmedVars_hists
 import EleCF_hists
 import TauCF_hists
+import Tau_hists

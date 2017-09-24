@@ -22,11 +22,11 @@ h_electrons_chargeflip  = Hist1D( hname  = "h_electrons_chargeflip",
                             )
                             
 h_taus_chargeflip  = Hist1D( hname  = "h_taus_chargeflip",
-                              xtitle = "????",
+                              xtitle = "Charge flip variable, 4D -> 1D projection",
                               ytitle = "Events", 
-                              nbins  = 72900,
+                              nbins  = 64,
                               xmin   = 0,
-                              xmax   = 72900,
+                              xmax   = 64,
                               dir    = "event",
                               vexpr  = "self.store['taus_CFtotBin']",
                             )                            
@@ -41,8 +41,8 @@ h_taus_chargeflip  = Hist1D( hname  = "h_taus_chargeflip",
 ################    Tau event    ################################
 
 h_taus_mTVis  = Hist1D( hname  = "h_taus_mTVis",
-                              xtitle = "m_{vis}(tau_{lead},jet_{lead}, jet_{sublead}) [GeV]",
-                              ytitle = "Events / (1 GeV)", 
+                              xtitle = "m_{vis}(#tau_{lead},#tau_{sublead}) [GeV]",
+                              ytitle = "Events / (2 GeV)", 
                               nbins  = 150,
                               xmin   = 0.0,
                               xmax   = 300.,
@@ -50,8 +50,8 @@ h_taus_mTVis  = Hist1D( hname  = "h_taus_mTVis",
                               vexpr  = "self.store['taus_mTVis']/GeV",
                             )
 h_taus_mTtot  = Hist1D( hname  = "h_taus_mTtot",
-                              xtitle = "m_{vis}(tau_{lead},jet_{lead}, jet_{sublead}, met) [GeV]",
-                              ytitle = "Events / (1 GeV)", 
+                              xtitle = "m_{tot}(#tau_{lead},#tau_{sublead}, MET) [GeV]",
+                              ytitle = "Events / (2 GeV)", 
                               nbins  = 150,
                               xmin   = 0.0,
                               xmax   = 300.,
@@ -65,7 +65,7 @@ h_taus_chargeprod  = Hist1D( hname  = "h_taus_chargeprod",
                               ytitle = "Events", 
                               nbins  = 4,
                               xmin   = -2,
-                              xmax   = 5,
+                              xmax   = 2,
                               dir    = "event",
                               vexpr  = "self.store['taus_charge_product']",
                             )
@@ -81,8 +81,8 @@ h_taus_dphi  = Hist1D( hname  = "h_taus_dphi",
                             )
                             
 h_taus_mCol  = Hist1D( hname  = "h_taus_mCol",
-                              xtitle = "m^{Col}_{T}(#tau_{lead},#tau_{sublead}) [GeV]",
-                              ytitle = "Events / (1 GeV)", 
+                              xtitle = "m_{Col}(#tau_{lead},#tau_{sublead}) [GeV]",
+                              ytitle = "Events / (2 GeV)", 
                               nbins  = 150,
                               xmin   = 0.0,
                               xmax   = 300.,
@@ -1818,4 +1818,97 @@ h_NegMassVsPosMass  = Hist2D( hname      = "h_NegMassVsPosMass",
                               dir     = "event",
                               vexpr   = "self.store['mVis1']/GeV , self.store['mVis2']/GeV",
                           )
+
+# -------
+# Taus
+# -------
+
+# taulead
+# ------
+h_taulead_pt = Hist1D( hname  = "h_taulead_pt",
+                              xtitle = "p_{T}(#tau_{lead}) [GeV]",
+                              ytitle = "Events / (0.1 GeV)", 
+                              nbins  = 2000,
+                              xmin   = 0.0,
+                              xmax   = 200.,
+                              dir    = "taus",
+                              vexpr  = "self.store['taus'][0].tlv.Pt() / GeV",
+                            )
+
+h_taulead_eta = Hist1D( hname  = "h_taulead_eta",
+                              xtitle = "#eta(#tau_{lead})",
+                              ytitle = "Events / (0.1)", 
+                              nbins  = 50,
+                              xmin   = -2.5,
+                              xmax   = 2.5,
+                              dir    = "taus",
+                              vexpr  = "self.store['taus'][0].tlv.Eta()",
+                            )
+
+h_taulead_phi = Hist1D( hname  = "h_taulead_phi",
+                              xtitle = "#phi(#tau_{lead})",
+                              ytitle = "Events / (0.1)", 
+                              nbins  = 64,
+                              xmin   = -3.2,
+                              xmax   = 3.2,
+                              dir    = "taus",
+                              vexpr  = "self.store['taus'][0].tlv.Phi()",
+                            )
+
+
+                            
+h_taulead_ntrk  = Hist1D( hname  = "h_taulead_ntrk",
+                              xtitle = "ntrk(#tau_{lead})",
+                              ytitle = "Events", 
+                              nbins  = 3,
+                              xmin   = 1.,
+                              xmax   = 4.,
+                              dir    = "taus",
+                              vexpr  = "self.store['taus'][0].ntrk",
+                            )         
+
+# tausublead
+# ---------
+h_tausublead_pt = Hist1D( hname  = "h_tausublead_pt",
+                              xtitle = "p_{T}(#tau_{sublead}) [GeV]",
+                              ytitle = "Events / (0.1 GeV)", 
+                              nbins  = 2000,
+                              xmin   = 0.0,
+                              xmax   = 200,
+                              dir    = "taus",
+                              vexpr  = "self.store['taus'][1].tlv.Pt() / GeV",
+                            )
+
+h_tausublead_eta = Hist1D( hname  = "h_tausublead_eta",
+                              xtitle = "#eta(#tau_{sublead})",
+                              ytitle = "Events / (0.1)", 
+                              nbins  = 50,
+                              xmin   = -2.5,
+                              xmax   = 2.5,
+                              dir    = "taus",
+                              vexpr  = "self.store['taus'][1].tlv.Eta()",
+                            )
+
+h_tausublead_phi = Hist1D( hname  = "h_tausublead_phi",
+                              xtitle = "#phi(#tau_{sublead})",
+                              ytitle = "Events / (0.1)", 
+                              nbins  = 64,
+                              xmin   = -3.2,
+                              xmax   = 3.2,
+                              dir    = "taus",
+                              vexpr  = "self.store['taus'][1].tlv.Phi()",
+                            )
+
+                            
+h_tausublead_ntrk  = Hist1D( hname  = "h_tausublead_ntrk",
+                              xtitle = "ntrk(#tau_{sublead})",
+                              ytitle = "Events", 
+                              nbins  = 3,
+                              xmin   = 1.,
+                              xmax   = 4.,
+                              dir    = "taus",
+                              vexpr  = "self.store['taus'][1].ntrk",
+                            )                            
+                          
+                          
 # EOF

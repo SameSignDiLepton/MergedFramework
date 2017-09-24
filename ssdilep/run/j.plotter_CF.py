@@ -92,10 +92,12 @@ def analyze(config):
         )
     ## build MET
     ## ---------------------------------------
+    '''
     loop += ssdilep.algs.met.METCLUS(
         prefix='metFinalClus',
         key = 'met_clus',
         )
+    '''    
     loop += ssdilep.algs.met.METTRK(
         prefix='metFinalTrk',
         key = 'met_trk',
@@ -126,7 +128,7 @@ def analyze(config):
     loop += ssdilep.algs.vars.SR2ChannelFlavour()
     ## initialize and/or decorate objects
     ## ---------------------------------------
-    loop += ssdilep.algs.vars.ASDiEle_chargeflip_Vars(key_electrons='electrons')   
+    loop += ssdilep.algs.vars.DiEle_chargeflip_Vars(key_electrons='electrons')   
     
     ## configure histograms
     ## ---------------------------------------

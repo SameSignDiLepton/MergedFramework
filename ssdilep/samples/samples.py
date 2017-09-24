@@ -1832,13 +1832,14 @@ all_mc += ZmumuPowheg.daughters
 
 
 mc_bkg = []
+mc_bkg += ZtautauPowheg.daughters
 
-mc_bkg.append( dibosonSherpa221 )
-mc_bkg.append( dibosonSysSample )
+#mc_bkg.append( dibosonSherpa221 )
+#mc_bkg.append( dibosonSysSample )
 #mc_bkg.append( diboson_alt)
 #mc_bkg += all_DCH.daughters
 #mc_bkg += Pythia8EvtGen_A14NNPDF23LO_DCH300
-mc_bkg.append( ttX )
+#mc_bkg.append( ttX )
 
 signal = []
 signal += all_DCH.daughters  
